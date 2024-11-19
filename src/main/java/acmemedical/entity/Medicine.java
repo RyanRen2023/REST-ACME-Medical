@@ -2,7 +2,7 @@
  * File:  Medicine.java Course Materials CST 8277
  *
  * @author Teddy Yap
- * 
+ *
  */
 package acmemedical.entity;
 
@@ -11,17 +11,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.Basic;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 
 @SuppressWarnings("unused")
 
@@ -33,7 +23,7 @@ import jakarta.persistence.Transient;
 //Hint - @Entity name does not matter as long as it is consistent across the code.
 @Entity
 //Hint - @Table defines a specific table on DB which is mapped to this entity.
-@Table(name = "medicine") 
+@Table(name = "medicine")
 //Hint - @NamedQuery attached to this class which uses JPQL/HQL.  SQL cannot be used with NamedQuery.
 //Hint - @NamedQuery uses the name which is defined in @Entity for JPQL, if no name is defined use class name.
 //Hint - @NamedNativeQuery can optionally be used if there is a need for SQL query.
@@ -66,7 +56,7 @@ public class Medicine extends PojoBase implements Serializable {
 	// Hint - @Transient is used to annotate a property or field of an entity class, mapped superclass, or embeddable class which is not persistent.
 	@Transient
 	private String chemicalName;
-	
+
 	@Transient
 	private String genericName;
 
@@ -82,7 +72,7 @@ public class Medicine extends PojoBase implements Serializable {
 	public Medicine() {
 		super();
 	}
-	
+
 	public Medicine(String drugName, String manufacturerName, String dosageInformation, Set<Prescription> prescriptions) {
 		this();
 		this.drugName = drugName;

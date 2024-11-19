@@ -2,7 +2,7 @@
  * File:  DurationAndStatus.java Course Materials CST 8277
  *
  * @author Teddy Yap
- * 
+ *
  */
 package acmemedical.entity;
 
@@ -10,17 +10,26 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-//TODO DS01 - This class is not an entity however it can be embedded in other entities.  Add missing annotation.
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+
+@SuppressWarnings("unused")
+
+// TODO DS01 - This class is not an entity, however, it can be embedded in other entities. Add missing annotation.
+@Embeddable
 public class DurationAndStatus implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	// TODO DS02 - Add annotations
+	@Column(name = "start_date", nullable = false)
 	private LocalDateTime startDate;
-	
+
 	// TODO DS03 - Add annotations
+	@Column(name = "end_date", nullable = true)
 	private LocalDateTime endDate;
 
 	// TODO DS04 - Add annotations
+	@Column(name = "active", columnDefinition = "BIT(1)", nullable = false)
 	private byte active;
 
 	public DurationAndStatus() {
@@ -59,16 +68,13 @@ public class DurationAndStatus implements Serializable {
 	}
 
 	/**
-	 * Very important:  Use getter's for member variables because JPA sometimes needs to intercept those calls<br/>
+	 * Very important: Use getter's for member variables because JPA sometimes needs to intercept those calls
 	 * and go to the database to retrieve the value
 	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		// Only include member variables that really contribute to an object's identity
-		// i.e. if variables like version/updated/name/etc. change throughout an object's lifecycle,
-		// they shouldn't be part of the hashCode calculation
 		return prime * result + Objects.hash(getStartDate(), getEndDate(), getActive());
 	}
 
@@ -82,13 +88,10 @@ public class DurationAndStatus implements Serializable {
 		}
 
 		if (obj instanceof DurationAndStatus otherDurationAndStatus) {
-			// See comment (above) in hashCode():  Compare using only member variables that are
-			// truly part of an object's identity
 			return Objects.equals(this.getStartDate(), otherDurationAndStatus.getStartDate()) &&
 					Objects.equals(this.getEndDate(), otherDurationAndStatus.getEndDate()) &&
 					Objects.equals(this.getActive(), otherDurationAndStatus.getActive());
 		}
 		return false;
 	}
-
 }

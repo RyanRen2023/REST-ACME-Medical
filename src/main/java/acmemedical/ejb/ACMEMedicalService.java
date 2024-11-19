@@ -7,6 +7,8 @@
  */
 package acmemedical.ejb;
 
+import static acmemedical.entity.SecurityRole.ROLE_BY_NAME_QUERY;
+import static acmemedical.entity.SecurityUser.USER_FOR_OWNING_PHYSICIAN_QUERY;
 import static acmemedical.utility.MyConstants.DEFAULT_KEY_SIZE;
 import static acmemedical.utility.MyConstants.DEFAULT_PROPERTY_ALGORITHM;
 import static acmemedical.utility.MyConstants.DEFAULT_PROPERTY_ITERATIONS;

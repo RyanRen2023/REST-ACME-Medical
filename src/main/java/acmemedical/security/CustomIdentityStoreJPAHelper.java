@@ -50,7 +50,7 @@ public class CustomIdentityStoreJPAHelper {
          *         requests will fail, none of the REST'ful endpoints will work.
          *  
          */
-        @ThisAnnotationDoesNotExistSoYouMustFixThisBeforeTheProjectCanDeploy
+       // @ThisAnnotationDoesNotExistSoYouMustFixThisBeforeTheProjectCanDeploy
         return user;
     }
 

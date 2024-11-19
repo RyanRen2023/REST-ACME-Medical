@@ -6,6 +6,8 @@
  */
 package acmemedical.entity;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,27 +15,38 @@ import java.util.Set;
 /**
  * The persistent class for the physician database table.
  */
-@SuppressWarnings("unused")
 
 //TODO PH01 - Add the missing annotations.
 //TODO PH02 - Do we need a mapped super class? If so, which one?
+@Entity
+@Table(name="physician")
+@NamedQuery( name = Physician.ALL_PHYSICIANS_QUERY_NAME, query = "SELECT p FROM Physician p")
+
 public class Physician extends PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	public static final String ALL_PHYSICIANS_QUERY_NAME = "Physician.findAll";
 
     public Physician() {
     	super();
     }
 
 	// TODO PH03 - Add annotations.
+	@Column( name = "first_name")
 	private String firstName;
 
 	// TODO PH04 - Add annotations.
+	@Column( name = "last_name")
 	private String lastName;
 
 	// TODO PH05 - Add annotations for 1:M relation.  What should be the cascade and fetch types?
+	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinColumn(name = "physician_id", insertable = false, updatable = false)
 	private Set<MedicalCertificate> medicalCertificates = new HashSet<>();
 
 	// TODO PH06 - Add annotations for 1:M relation.  What should be the cascade and fetch types?
+	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinColumn(name = "physician_id", insertable = false, updatable = false)
 	private Set<Prescription> prescriptions = new HashSet<>();
 
 	public String getFirstName() {
@@ -53,6 +66,8 @@ public class Physician extends PojoBase implements Serializable {
 	}
 
 	// TODO PH07 - Is an annotation needed here?
+	//  np
+
     public Set<MedicalCertificate> getMedicalCertificates() {
 		return medicalCertificates;
 	}
@@ -62,6 +77,7 @@ public class Physician extends PojoBase implements Serializable {
 	}
 
 	// TODO PH08 - Is an annotation needed here?
+	//  No
     public Set<Prescription> getPrescriptions() {
 		return prescriptions;
 	}

@@ -4,7 +4,7 @@
  * @author Teddy Yap
  * @author Shariar (Shawn) Emami
  * @author (original) Mike Norman
- * 
+ *
  */
 package acmemedical.rest.resource;
 
@@ -75,7 +75,7 @@ public class PhysicianResource {
         Physician physician = null;
 
         if (sc.isCallerInRole(ADMIN_ROLE)) {
-        	physician = service.getPhysicianById(id);
+            physician = service.getPhysicianById(id);
             response = Response.status(physician == null ? Status.NOT_FOUND : Status.OK).entity(physician).build();
         } else if (sc.isCallerInRole(USER_ROLE)) {
             WrappingCallerPrincipal wCallerPrincipal = (WrappingCallerPrincipal) sc.getCallerPrincipal();
@@ -84,7 +84,7 @@ public class PhysicianResource {
             if (physician != null && physician.getId() == id) {
                 response = Response.status(Status.OK).entity(physician).build();
             } else {
-            	//disallows a ‘USER_ROLE’ user from getting a physician that is not linked to the SecurityUser.
+                //disallows a ‘USER_ROLE’ user from getting a physician that is not linked to the SecurityUser.
                 throw new ForbiddenException("User trying to access resource it does not own (wrong userid)");
             }
         } else {
@@ -115,5 +115,6 @@ public class PhysicianResource {
         response = Response.ok(medicine).build();
         return response;
     }
-    
+
+
 }

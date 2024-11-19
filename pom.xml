@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.algonquinmedical.cst8277</groupId>
@@ -9,14 +9,7 @@
     <packaging>war</packaging>
     <name>REST-ACMEMedical-Skeleton</name>
 
-    <!-- Why is everything a property?  Because hard-coded values become part 
-        of Maven's immutable Model object and then their contents can't be changed. 
-        However, if the value is set in a user-defined property BEFORE the Model 
-        object is created, then it is possible to do:  mvn clean compile -Dfoo.bar.version=1.2.3 
-        in order to (say for example) test out a newer version of some dependency 
-        without having to change the pom.xml. -->
     <properties>
-        <!-- Maven properties -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.war.plugin.version>3.3.2</maven.war.plugin.version>
@@ -26,8 +19,7 @@
         <maven-project-info-reports-plugin.version>3.1.2</maven-project-info-reports-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
 
-        <!-- code properties -->
-        <jersey.version>3.0.0</jersey.version> <!-- this version is compatible with Jakarta EE 9 -->
+        <jersey.version>3.0.0</jersey.version>
         <jackson.version>2.17.1</jackson.version>
         <jakartaee.api.version>9.0.0</jakartaee.api.version>
         <jakarta.security.enterprise.version>2.0.0</jakarta.security.enterprise.version>
@@ -36,10 +28,12 @@
         <log4j-api.version>2.17.2</log4j-api.version>
         <log4j-core.version>2.17.2</log4j-core.version>
 
-        <!-- test properties -->
         <junit.version>5.7.0</junit.version>
-        <junit-platform-suite-engine.version>1.8.1</junit-platform-suite-engine.version>
         <org.hamcrest.version>2.2</org.hamcrest.version>
+
+
+        <!-- Swagger related versions -->
+        <swagger.core.version>2.1.6</swagger.core.version>
     </properties>
 
     <dependencyManagement>
@@ -54,7 +48,9 @@
         </dependencies>
     </dependencyManagement>
 
-     <dependencies>
+
+
+    <dependencies>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
@@ -100,12 +96,22 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${connectorj.version}</version>
         </dependency>
-        <!-- Hiberate dependency -->
-    	<dependency>
-      		<groupId>org.hibernate</groupId>
-      		<artifactId>hibernate-core-jakarta</artifactId>
-      		<version>${hibernate.version}</version>
-    	</dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core-jakarta</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <!-- Swagger dependencies -->
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-jaxrs2</artifactId>
+            <version>${swagger.core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger.core.version}</version>
+        </dependency>
         <!-- test dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -129,18 +135,6 @@
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-client</artifactId>
             <version>${jersey.version}</version>
-            <!--
-            <exclusions>
-                <exclusion>
-                    <groupId>org.glassfish.hk2.external</groupId>
-                    <artifactId>jakarta.inject</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>jakarta.ws.rs</groupId>
-                    <artifactId>jakarta.ws.rs-api</artifactId>
-                </exclusion>
-            </exclusions>
-            -->
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -201,7 +195,6 @@
         </plugins>
     </build>
 
-    <!-- Generate HTML Report -->
     <reporting>
         <plugins>
             <plugin>

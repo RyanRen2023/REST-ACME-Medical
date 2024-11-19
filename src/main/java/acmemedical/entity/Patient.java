@@ -2,9 +2,15 @@
  * File:  Patient.java Course Materials CST 8277
  *
  * @author Teddy Yap
- * 
+ *
  */
 package acmemedical.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -15,33 +21,47 @@ import java.util.Set;
 /**
  * The persistent class for the patient database table.
  */
-//TODO PA01 - Add the missing annotations.
-//TODO PA02 - Do we need a mapped super class?  If so, which one?
+// TODO PA01 - Add the missing annotations.
+@Entity
+@Table(name = "patient")
+// TODO PA02 - Do we need a mapped super class? If so, which one?
+// Answer: Yes, we need a mapped super class. The superclass is PojoBase.
+@NamedQuery(name = Patient.ALL_PATIENTS_QUERY_NAME, query = "SELECT p FROM Patient p")
 public class Patient extends PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
+	public static final String ALL_PATIENTS_QUERY_NAME = "Patient.findAll";
+
 	// TODO PA03 - Add missing annotations.
+	@Column(name = "first_name")
 	private String firstName;
 
 	// TODO PA04 - Add missing annotations.
+	@Column(name = "last_name")
 	private String lastName;
 
 	// TODO PA05 - Add missing annotations.
+	@Column(name = "year")
 	private int year;
 
 	// TODO PA06 - Add missing annotations.
+	@Column(name = "address")
 	private String address;
 
 	// TODO PA07 - Add missing annotations.
+	@Column(name = "height")
 	private int height;
 
 	// TODO PA08 - Add missing annotations.
+	@Column(name = "weight")
 	private int weight;
 
 	// TODO PA09 - Add missing annotations.
+	@Column(name = "smoker")
 	private byte smoker;
 
-	// TODO PA10 - Add annotations for 1:M relation.  What should be the cascade and fetch types?
+	// TODO PA10 - Add annotations for 1:M relation. What should be the cascade and fetch types?
+	@OneToMany(mappedBy = "patient", cascade = jakarta.persistence.CascadeType.ALL, fetch = jakarta.persistence.FetchType.LAZY)
 	private Set<Prescription> prescriptions = new HashSet<>();
 
 	public Patient() {
@@ -125,7 +145,7 @@ public class Patient extends PojoBase implements Serializable {
 	public void setSmoker(byte smoker) {
 		this.smoker = smoker;
 	}
-	
+
 	public Set<Prescription> getPrescriptions() {
 		return prescriptions;
 	}
@@ -134,6 +154,5 @@ public class Patient extends PojoBase implements Serializable {
 		this.prescriptions = prescriptions;
 	}
 
-	//Inherited hashCode/equals is sufficient for this Entity class
-
+	// Inherited hashCode/equals is sufficient for this Entity class
 }
