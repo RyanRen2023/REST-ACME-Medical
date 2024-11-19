@@ -1,0 +1,123 @@
+@startuml
+skinparam titleFontColor #0000FF
+skinparam genericDisplay old
+top to bottom direction
+annotation Embeddable
+title REST ACMEMedical Group Project
+
+abstract class PojoBase {
+    #id: int
+    #version: int
+    #created : LocalDateTime 
+    #updated : LocalDateTime
+}
+
+note top of PojoBase #FFFFCC
+  The Java class names follow AAAPojo naming convention
+  Classes extend PojoBase except as indicated
+end note
+
+abstract class PojoBaseCompositeKey<ID> {
+    #version: int
+    #created : LocalDateTime 
+    #updated : LocalDateTime
+    +ID : getId()
+}
+
+together {
+  class Physician {
+    -firstName: String
+    -lastName: String
+    -medicalCertificates : Set<MedicalCertificate>
+    -prescriptions: Set<Prescription> 
+  }
+  class Patient {
+    -firstName: String
+    -lastName: String
+    -year: int
+    -address: String
+    -height: int
+    -weight: int
+    -smoker: byte
+    -prescriptions: Set<Prescription>
+  }
+  class PrescriptionPK {
+    -physicianId : int
+    -patientId : int
+  }
+  Embeddable -- PrescriptionPK
+  class Prescription <<extends PojoBaseCompositeKey<PrescriptionPK>>> extends PojoBaseCompositeKey  {
+  	-id : PrescriptionPK
+	  -physician: Physician
+	  -patient: Patient
+	  -medicine: Medicine
+    -numberOfRefills: int
+    -prescriptionInformation: String
+  }
+
+  Prescription -r- PrescriptionPK : id
+  Prescription "<i>has a</i>" ---> Physician : physician
+  Prescription "<i>has a</i>" ---> Patient : patient
+  Prescription "<i>has a</i>" ---> Medicine : medicine
+  Medicine "<i>has many</i>" *---> "*" Prescription : prescriptions
+  class Medicine {
+    -drugName: String
+    -manufacturerName: String
+    -dosageInformation: String
+    -chemicalName: String
+    -genericName: String
+    -prescriptions: Set<Prescription>
+  }
+  abstract class MedicalSchool {
+    -name: String
+    -isPublic: boolean
+    -medicalTrainings: Set<MedicalTraining> 
+  }
+  MedicalSchool <|-d- PublicSchool
+  MedicalSchool <|-d- PrivateSchool
+  class DurationAndStatus {
+   	-startDate: LocalDateTime
+   	-endDate: LocalDateTime
+   	-active: byte
+  }
+  Embeddable -- DurationAndStatus
+  class MedicalTraining {
+    -school: MedicalSchool
+    -certificate: MedicalCertificate
+    -durationAndStatus: DurationAndStatus
+  }
+  class MedicalCertificate {
+    -medicalTraining: MedicalTraining
+    -owner: Student
+    -signed: byte
+  }
+  MedicalTraining -r- DurationAndStatus : durationAndStatus
+  MedicalSchool "<i>has many</i>" *--> "*" MedicalTraining : medicalTrainings
+  MedicalTraining "<i>has a</i>" --> MedicalSchool : school
+  MedicalTraining "1" --o "<i>has a</i>" MedicalCertificate: certificate
+  MedicalCertificate "1" --o "<i>has a</i>" MedicalTraining : medicalTraining
+  Physician "<i>has many</i>" *---> "*" MedicalCertificate : medicalCertificates
+  Physician "<i>has many</i>" *---> "*" Prescription : prescriptions
+  MedicalCertificate "<i>has a</i>" --->  Physician : owner
+
+  class SecurityUser <<Object>>  {
+    #int id
+    #string username
+    #string pwHash
+    #Set<SecurityRole> roles
+    #physician : Physician
+  }
+  class SecurityRole<<Object>> {
+    #int id
+    #string roleName
+    #Set<SecurityUser> users
+  }
+  SecurityUser "<i>has many</i> roles" *--* "*" SecurityRole
+  SecurityUser "<i>has a</i>" --> Physician : physician
+  SecurityRole "<i>has many</i> users" *--* "*" SecurityUser
+}
+
+footer
+CST 8277 Group Project/Assignment
+endfooter
+@enduml

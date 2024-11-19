@@ -1,0 +1,17 @@
+Total points for the Group Project is 100 points.
+
+Group Project Rubric:
+=====================
+1.  Completed CustomIdentityStoreJPAHelper = 5 points
+2.  Completed relationship mapping between SecurityUser and Physician = 5 points
+3.  Finished the 2 TODOs inside ACMECollegeService.java = 10 points
+3.  REST APIs
+               Medicine = 10 points
+               Physician = 10 points
+               MedicalTraining = 10 points
+               MedicalCertificate = 10 points
+	       Physician/MedicalSchool = 10 points
+4.  JUnit Tests = 30 points
+
+-100:  Didn't demo the project to lab professor
+-100:  Didn't use the provided skeleton project for this assignment
