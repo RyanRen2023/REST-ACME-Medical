@@ -2,7 +2,7 @@
  * File:  MedicalTraining.java Course Materials CST 8277
  *
  * @author Teddy Yap
- * 
+ *
  */
 package acmemedical.entity;
 
@@ -22,7 +22,8 @@ import jakarta.persistence.Embedded;
 //TODO MT02 - Do we need a mapped super class?  If so, which one?
 public class MedicalTraining extends PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+	public static final String FIND_BY_ID = "MedicalTraining.findById";
+
 	// TODO MT03 - Add annotations for M:1.  What should be the cascade and fetch types?
 	private MedicalSchool school;
 
@@ -47,11 +48,11 @@ public class MedicalTraining extends PojoBase implements Serializable {
 	public MedicalCertificate getCertificate() {
 		return certificate;
 	}
-	
+
 	public void setCertificate(MedicalCertificate certificate) {
 		this.certificate = certificate;
 	}
-	
+
 	public DurationAndStatus getDurationAndStatus() {
 		return durationAndStatus;
 	}
@@ -59,7 +60,7 @@ public class MedicalTraining extends PojoBase implements Serializable {
 	public void setDurationAndStatus(DurationAndStatus durationAndStatus) {
 		this.durationAndStatus = durationAndStatus;
 	}
-	
+
 	//Inherited hashCode/equals NOT sufficient for this Entity class
 	/**
 	 * Very important:  Use getter's for member variables because JPA sometimes needs to intercept those calls<br/>
@@ -72,7 +73,7 @@ public class MedicalTraining extends PojoBase implements Serializable {
 		// Only include member variables that really contribute to an object's identity
 		// i.e. if variables like version/updated/name/etc. change throughout an object's lifecycle,
 		// they shouldn't be part of the hashCode calculation
-		
+
 		// include DurationAndStatus in identity
 		return prime * result + Objects.hash(getId(), getDurationAndStatus());
 	}
@@ -89,7 +90,7 @@ public class MedicalTraining extends PojoBase implements Serializable {
 			// See comment (above) in hashCode():  Compare using only member variables that are
 			// truly part of an object's identity
 			return Objects.equals(this.getId(), otherMedicalTraining.getId()) &&
-				Objects.equals(this.getDurationAndStatus(), otherMedicalTraining.getDurationAndStatus());
+					Objects.equals(this.getDurationAndStatus(), otherMedicalTraining.getDurationAndStatus());
 		}
 		return false;
 	}

@@ -3,10 +3,19 @@
  *
  * @author Teddy Yap
  * @author Shariar (Shawn) Emami
- * 
+ *
  */
 package acmemedical.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.metamodel.StaticMetamodel;
+
+import javax.annotation.processing.Generated;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -17,24 +26,35 @@ import java.util.Set;
 /**
  * Role class used for (JSR-375) Jakarta EE Security authorization/authentication
  */
-//TODO SR01 - Make this into JPA entity and add all necessary annotations inside the class.
+// TODO SR01 - Make this into JPA entity and add all necessary annotations inside the class.
+@Entity
+@Table(name = "security_role")
+@Generated(value="Dali", date="2024-11-19T18:44:51.685-0500")
+@StaticMetamodel(SecurityRole.class)
 public class SecurityRole implements Serializable {
-    /** Explicit set serialVersionUID */
+    /**
+     * Explicit set serialVersionUID
+     */
     private static final long serialVersionUID = 1L;
+    public static final String ROLE_BY_NAME_QUERY = "SecurityRole.findByRoleName";
 
-    //TODO SR02 - Add annotations.
+
+    // TODO SR02 - Add annotations.
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
-    
-    //TODO SR03 - Add annotations.
+
+    // TODO SR03 - Add annotations.
     protected String roleName;
-    
-    //TODO SR04 - Add annotations.
+
+    // TODO SR04 - Add annotations.
+    @ManyToMany(mappedBy = "roles")
     protected Set<SecurityUser> users = new HashSet<SecurityUser>();
 
     public SecurityRole() {
         super();
     }
-    
+
     public int getId() {
         return id;
     }
@@ -82,7 +102,7 @@ public class SecurityRole implements Serializable {
             return false;
         }
         if (obj instanceof SecurityRole otherSecurityRole) {
-            // See comment (above) in hashCode():  Compare using only member variables that are
+            // See comment (above) in hashCode(): Compare using only member variables that are
             // truly part of an object's identity
             return Objects.equals(this.getId(), otherSecurityRole.getId());
         }
