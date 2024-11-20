@@ -13,11 +13,11 @@ package acmemedical.utility;
  * <p>
  * The key idea here is that often an annotation contains String-based parameters that <b><u>must be an exact match</u></b> <br/>
  * to a string used elsewhere.  Use of this type of 'contants' Interface class prevents errors such as:
-<blockquote><pre>
-{@literal @}GET
-{@literal @}Path("{<b><u>emailID</u></b>}/project")  // accidently capitalized <b><u>ID</u></b>, instead of camel-case <b><u>Id</u></b>
-public List<Project> getProjects({@literal @}PathParam("<b><u>emailId</u></b>") String emailId) ...  // path parameter does not match annotation
-</pre></blockquote>
+ <blockquote><pre>
+ {@literal @}GET
+ {@literal @}Path("{<b><u>emailID</u></b>}/project")  // accidently capitalized <b><u>ID</u></b>, instead of camel-case <b><u>Id</u></b>
+ public List<Project> getProjects({@literal @}PathParam("<b><u>emailId</u></b>") String emailId) ...  // path parameter does not match annotation
+ </pre></blockquote>
  *
  * @author Shariar (Shawn) Emami
  * @author mwnorman (original)
@@ -43,7 +43,7 @@ public interface MyConstants {
     public static final String MEDICAL_TRAINING_RESOURCE_NAME = "medicaltraining";
     public static final String MEDICINE_SUBRESOURCE_NAME =  "medicine";
     public static final String PATIENT_MEDICINE_RESOURCE_PATH =
-        RESOURCE_PATH_ID_PATH + SLASH + MEDICINE_SUBRESOURCE_NAME;
+            RESOURCE_PATH_ID_PATH + SLASH + MEDICINE_SUBRESOURCE_NAME;
     public static final String PHYSICIAN_PATIENT_MEDICINE_RESOURCE_PATH = "/{physicianId}/patient/{patientId}/medicine";
     public static final String SCHOOL_ID_RESOURCE_NAME = "school_id";
     public static final String RESOURCE_PATH_SCHOOL_ID_PATH = "/{" + SCHOOL_ID_RESOURCE_NAME + "}";
@@ -51,8 +51,8 @@ public interface MyConstants {
     public static final String RESOURCE_PATH_PHYSICIAN_ID_PATH =  "/{" + PHYSICIAN_ID_RESOURCE_NAME + "}";
     public static final String TRAINING_ID_RESOURCE_NAME = "training_id";
     public static final String RESOURCE_PATH_TRAINING_ID_PATH =  "/{" + TRAINING_ID_RESOURCE_NAME + "}";
-    
-    //REST constants for peertutor 
+
+    //REST constants for peertutor
     public static final String MEDICINE_RESOURCE_NAME =  "medicine";
     public static final String MEDICINE_ID_RESOURCE_NAME =  "medicine_id";
     public static final String PATIENT_ID_RESOURCE_NAME = "patient_id";
@@ -63,9 +63,9 @@ public interface MyConstants {
     public static final String USER_ROLE = "USER_ROLE";
     public static final String ADMIN_ROLE = "ADMIN_ROLE";
     public static final String ACCESS_REQUIRES_AUTHENTICATION =
-        "Access requires authentication";
+            "Access requires authentication";
     public static final String ACCESS_TO_THE_SPECIFIED_RESOURCE_HAS_BEEN_FORBIDDEN =
-        "Access to the specified resource has been forbidden";
+            "Access to the specified resource has been forbidden";
     //Eclipse MicroProfile Config - externalise configuration:  default in META-INF/microprofile-config.properties
     public static final String DEFAULT_ADMIN_USER_PROPNAME = "default-admin-user";
     public static final String DEFAULT_ADMIN_USER = "admin";

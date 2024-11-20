@@ -10,6 +10,9 @@ import java.io.Serializable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
@@ -29,10 +32,15 @@ public class MedicalCertificate extends PojoBase implements Serializable {
 	public static final String ID_CARD_QUERY_NAME = "MedicalCertificate.findById";
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "certificate_id")
+	private int certificateId;
+
 	// TODO MC03 - Add annotations for 1:1 mapping. What should be the cascade and fetch types?
 	// Answer: Assuming that a medical certificate has exactly one training associated with it, we use OneToOne mapping.
 	@OneToOne(optional = false)
-	@JoinColumn(name = "medical_training_id", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "training_id", referencedColumnName = "training_id", nullable = false, unique = true)
 	private MedicalTraining medicalTraining;
 
 	// TODO MC04 - Add annotations for M:1 mapping. What should be the cascade and fetch types?
