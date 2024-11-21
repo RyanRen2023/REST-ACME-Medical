@@ -204,28 +204,62 @@ public class ACMEMedicalService implements Serializable {
         return allQuery.getSingleResult();
     }
 
-    @Transactional
-    public MedicalSchool deleteMedicalSchool(int id) {
-        //MedicalSchool ms = getMedicalSchoolById(id);
-    	MedicalSchool ms = getById(MedicalSchool.class, MedicalSchool.SPECIFIC_MEDICAL_SCHOOL_QUERY_NAME, id);
-        if (ms != null) {
-            Set<MedicalTraining> medicalTrainings = ms.getMedicalTrainings();
-            List<MedicalTraining> list = new LinkedList<>();
-            medicalTrainings.forEach(list::add);
-            list.forEach(mt -> {
-                if (mt.getCertificate() != null) {
-                    MedicalCertificate mc = getById(MedicalCertificate.class, MedicalCertificate.ID_CARD_QUERY_NAME, mt.getCertificate().getId());
-                    mc.setMedicalTraining(null);
-                }
-                mt.setCertificate(null);
-                em.merge(mt);
-            });
-            em.remove(ms);
-            return ms;
-        }
-        return null;
+//    @Transactional
+//    public MedicalSchool deleteMedicalSchool(int id) {
+//        //MedicalSchool ms = getMedicalSchoolById(id);
+//    	MedicalSchool ms = getById(MedicalSchool.class, MedicalSchool.SPECIFIC_MEDICAL_SCHOOL_QUERY_NAME, id);
+//        if (ms != null) {
+//            Set<MedicalTraining> medicalTrainings = ms.getMedicalTrainings();
+//            List<MedicalTraining> list = new LinkedList<>();
+//            medicalTrainings.forEach(list::add);
+//            list.forEach(mt -> {
+//                if (mt.getCertificate() != null) {
+//                    MedicalCertificate mc = getById(MedicalCertificate.class, MedicalCertificate.ID_CARD_QUERY_NAME, mt.getCertificate().getId());
+//                    mc.setMedicalTraining(null);
+//                }
+//                mt.setCertificate(null);
+//                em.merge(mt);
+//            });
+//            em.remove(ms);
+//            return ms;
+//        }
+//        return null;
+//    }
+@Transactional
+public MedicalSchool deleteMedicalSchool(int id) {
+    MedicalSchool ms = getById(MedicalSchool.class, MedicalSchool.SPECIFIC_MEDICAL_SCHOOL_QUERY, id);
+    if (ms != null) {
+        Set<MedicalTraining> medicalTrainings = ms.getMedicalTrainings();
+        List<MedicalTraining> list = new LinkedList<>();
+        medicalTrainings.forEach(list::add);
+
+        list.forEach(mt -> {
+            // 使用 JPQL 查询找到关联的 MedicalCertificate
+            MedicalCertificate mc = null;
+            try {
+                mc = em.createQuery(
+                                "SELECT mc FROM MedicalCertificate mc WHERE mc.medicalTraining.trainingId = :trainingId", MedicalCertificate.class)
+                        .setParameter("trainingId", mt.getTrainingId())
+                        .getSingleResult();
+            } catch (Exception e) {
+                // 如果找不到匹配的结果，getSingleResult() 会抛出异常，因此需要处理。
+                LOG.warn("No MedicalCertificate found for trainingId: " + mt.getTrainingId());
+            }
+
+            if (mc != null) {
+                // 解除 MedicalCertificate 与 MedicalTraining 的关联
+                mc.setMedicalTraining(null);
+                em.merge(mc);
+            }
+            em.remove(mt);
+        });
+
+        em.remove(ms);
     }
-    
+    return ms;
+}
+
+
     // Please study & use the methods below in your test suites
     
     public boolean isDuplicated(MedicalSchool newMedicalSchool) {

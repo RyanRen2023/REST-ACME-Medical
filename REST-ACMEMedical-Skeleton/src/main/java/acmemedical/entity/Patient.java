@@ -6,11 +6,7 @@
  */
 package acmemedical.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -24,6 +20,7 @@ import java.util.Set;
 // TODO PA01 - Add the missing annotations.
 @Entity
 @Table(name = "patient")
+@AttributeOverride(name = "id", column = @Column(name = "patient_id"))
 // TODO PA02 - Do we need a mapped super class? If so, which one?
 // Answer: Yes, we need a mapped super class. The superclass is PojoBase.
 @NamedQuery(name = Patient.ALL_PATIENTS_QUERY_NAME, query = "SELECT p FROM Patient p")
@@ -41,19 +38,19 @@ public class Patient extends PojoBase implements Serializable {
 	private String lastName;
 
 	// TODO PA05 - Add missing annotations.
-	@Column(name = "year")
+	@Column(name = "year_of_birth")
 	private int year;
 
 	// TODO PA06 - Add missing annotations.
-	@Column(name = "address")
+	@Column(name = "home_address")
 	private String address;
 
 	// TODO PA07 - Add missing annotations.
-	@Column(name = "height")
+	@Column(name = "height_cm")
 	private int height;
 
 	// TODO PA08 - Add missing annotations.
-	@Column(name = "weight")
+	@Column(name = "weight_kg")
 	private int weight;
 
 	// TODO PA09 - Add missing annotations.

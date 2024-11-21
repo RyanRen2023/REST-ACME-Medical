@@ -45,9 +45,15 @@ public class Prescription extends PojoBaseCompositeKey<PrescriptionPK> implement
 	private Physician physician;
 
 	//TODO PR01 - Add missing annotations.  Similar to physician, this field is a part of the composite key of this entity.  What should be the cascade and fetch types?  Reference to a patient is not optional.
+	@MapsId("patientId")
+	@ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "patient_id", referencedColumnName = "patient_id", nullable = false)
 	private Patient patient;
 
+
 	//TODO PR02 - Add missing annotations.  What should be the cascade and fetch types?
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinColumn(name = "medicine_id", referencedColumnName = "medicine_id", nullable = true)
 	private Medicine medicine;
 
 	@Column(name = "number_of_refills")

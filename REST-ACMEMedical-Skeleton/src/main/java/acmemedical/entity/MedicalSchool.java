@@ -30,7 +30,7 @@ import java.util.Set;
 @Entity(name="MedicalSchool")
 @Table(name="medical_school")
 @Access(AccessType.FIELD)
-@AttributeOverride(name="id", column=@Column(name="medical_school_id"))
+@AttributeOverride(name="id", column=@Column(name="school_id"))
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @NamedQuery(name = MedicalSchool.ALL_MEDICAL_SCHOOLS_QUERY_NAME, query = "SELECT ms FROM MedicalSchool ms")
 @NamedQuery(name = MedicalSchool.SPECIFIC_MEDICAL_SCHOOL_QUERY_NAME, query = "SELECT ms FROM MedicalSchool ms WHERE ms.id = :param1")
@@ -41,15 +41,16 @@ public abstract class MedicalSchool extends PojoBase implements Serializable {
 	public static final String ALL_MEDICAL_SCHOOLS_QUERY_NAME = "MedicalSchool.findAll";
 	public static final String SPECIFIC_MEDICAL_SCHOOL_QUERY_NAME = "MedicalSchool.findById";
 	public static final String IS_DUPLICATE_QUERY_NAME = "MedicalSchool.isDuplicate";
+	public static final String SPECIFIC_MEDICAL_SCHOOL_QUERY = "MedicalSchool.findById";
 
 	@Column(name = "name")
 	private String name;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "medical_school_id")
+	@JoinColumn(name = "school_id")
 	private Set<MedicalTraining> medicalTrainings = new HashSet<>();
 
-	@Column(name = "is_public")
+	@Column(name = "public")
 	private boolean isPublic;
 
 	public MedicalSchool() {

@@ -54,8 +54,11 @@ public class SecurityUser implements Serializable, Principal {
     protected String pwHash;
 
     // TODO SU05 - Add annotations.
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "physician_id", referencedColumnName = "physician_id", insertable = false, updatable = false)
+//    protected Physician physician;
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "physician_id", referencedColumnName = "physician_id", insertable = false, updatable = false)
+    @JoinColumn(name = "physician_id", referencedColumnName = "id")
     protected Physician physician;
 
     // TODO SU06 - Add annotations.

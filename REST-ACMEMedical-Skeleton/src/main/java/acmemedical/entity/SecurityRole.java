@@ -7,12 +7,7 @@
  */
 package acmemedical.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.persistence.metamodel.StaticMetamodel;
 
 import javax.annotation.processing.Generated;
@@ -42,6 +37,7 @@ public class SecurityRole implements Serializable {
     // TODO SR02 - Add annotations.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "role_id")
     protected int id;
 
     // TODO SR03 - Add annotations.

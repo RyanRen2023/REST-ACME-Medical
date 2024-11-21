@@ -16,12 +16,11 @@ import java.util.Set;
  * The persistent class for the physician database table.
  */
 
-//TODO PH01 - Add the missing annotations.
-//TODO PH02 - Do we need a mapped super class? If so, which one?
+// TODO PH02 - Do we need a mapped super class? If so, which one?
+// Answer: Yes, we need a mapped super class. The superclass is PojoBase.
 @Entity
-@Table(name="physician")
-@NamedQuery( name = Physician.ALL_PHYSICIANS_QUERY_NAME, query = "SELECT p FROM Physician p")
-
+@Table(name = "physician")
+@NamedQuery(name = Physician.ALL_PHYSICIANS_QUERY_NAME, query = "SELECT p FROM Physician p")
 public class Physician extends PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -32,21 +31,22 @@ public class Physician extends PojoBase implements Serializable {
 	}
 
 	// TODO PH03 - Add annotations.
-	@Column( name = "first_name")
+	@Column(name = "first_name", nullable = false)
 	private String firstName;
 
 	// TODO PH04 - Add annotations.
-	@Column( name = "last_name")
+	@Column(name = "last_name", nullable = false)
 	private String lastName;
 
-	// TODO PH05 - Add annotations for 1:M relation.  What should be the cascade and fetch types?
-	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-	@JoinColumn(name = "physician_id", insertable = false, updatable = false)
+	// TODO PH05 - Add annotations for 1:M relation. What should be the cascade and fetch types?
+	// Answer: Cascade type should be MERGE to merge changes to MedicalCertificate when changes are made to Physician.
+	// Fetch type should be LAZY as we do not always need to load MedicalCertificates.
+	@OneToMany(mappedBy = "owner", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	private Set<MedicalCertificate> medicalCertificates = new HashSet<>();
 
-	// TODO PH06 - Add annotations for 1:M relation.  What should be the cascade and fetch types?
-	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-	@JoinColumn(name = "physician_id", insertable = false, updatable = false)
+	// TODO PH06 - Add annotations for 1:M relation. What should be the cascade and fetch types?
+	// Answer: Cascade type should be MERGE, and fetch type should be LAZY for similar reasons as above.
+	@OneToMany(mappedBy = "physician", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	private Set<Prescription> prescriptions = new HashSet<>();
 
 	public String getFirstName() {
@@ -66,8 +66,7 @@ public class Physician extends PojoBase implements Serializable {
 	}
 
 	// TODO PH07 - Is an annotation needed here?
-	//  np
-
+	// Answer: No annotation is needed here, this is a regular getter method.
 	public Set<MedicalCertificate> getMedicalCertificates() {
 		return medicalCertificates;
 	}
@@ -77,7 +76,7 @@ public class Physician extends PojoBase implements Serializable {
 	}
 
 	// TODO PH08 - Is an annotation needed here?
-	//  No
+	// Answer: No annotation is needed here, this is a regular getter method.
 	public Set<Prescription> getPrescriptions() {
 		return prescriptions;
 	}
@@ -91,6 +90,5 @@ public class Physician extends PojoBase implements Serializable {
 		setLastName(lastName);
 	}
 
-	//Inherited hashCode/equals is sufficient for this entity class
-
+	// Inherited hashCode/equals is sufficient for this entity class
 }

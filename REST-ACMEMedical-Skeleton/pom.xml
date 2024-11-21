@@ -188,7 +188,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>${maven-project-info-reports-plugin.version}</version>
+                <!-- <version>${maven-project-info-reports-plugin.version}</version> -->
+                <version>3.1.1</version>
                 <reportSets>
                     <reportSet>
                         <reports>
