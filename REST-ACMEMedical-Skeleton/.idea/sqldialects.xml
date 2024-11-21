@@ -4,5 +4,6 @@
     <file url="file://$PROJECT_DIR$/Scripts/ACMEMedical create.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/Scripts/Acme Insert Data.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/META-INF/sql/acmemedical-create.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/META-INF/sql/acmemedical-data.sql" dialect="GenericSQL" />
   </component>
 </project>

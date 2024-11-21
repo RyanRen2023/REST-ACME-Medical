@@ -44,7 +44,8 @@ public interface MyConstants {
     public static final String MEDICINE_SUBRESOURCE_NAME =  "medicine";
     public static final String PATIENT_MEDICINE_RESOURCE_PATH =
             RESOURCE_PATH_ID_PATH + SLASH + MEDICINE_SUBRESOURCE_NAME;
-    public static final String PHYSICIAN_PATIENT_MEDICINE_RESOURCE_PATH = "/{physicianId}/patient/{patientId}/medicine";
+    //public static final String PHYSICIAN_PATIENT_MEDICINE_RESOURCE_PATH = "/{physicianId}/patient/{patientId}/medicine";
+    public static final String PHYSICIAN_PATIENT_MEDICINE_RESOURCE_PATH = "/{physician_id}/patient/{patient_id}/medicine";
     public static final String SCHOOL_ID_RESOURCE_NAME = "school_id";
     public static final String RESOURCE_PATH_SCHOOL_ID_PATH = "/{" + SCHOOL_ID_RESOURCE_NAME + "}";
     public static final String PHYSICIAN_ID_RESOURCE_NAME =  "physician_id";

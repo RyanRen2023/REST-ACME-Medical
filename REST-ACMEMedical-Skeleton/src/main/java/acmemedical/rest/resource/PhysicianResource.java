@@ -4,7 +4,7 @@
  * @author Teddy Yap
  * @author Shariar (Shawn) Emami
  * @author (original) Mike Norman
- * 
+ *
  */
 package acmemedical.rest.resource;
 
@@ -17,6 +17,7 @@ import static acmemedical.utility.MyConstants.USER_ROLE;
 
 import java.util.List;
 
+import acmemedical.utility.MyConstants;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.inject.Inject;
@@ -75,7 +76,7 @@ public class PhysicianResource {
         Physician physician = null;
 
         if (sc.isCallerInRole(ADMIN_ROLE)) {
-        	physician = service.getPhysicianById(id);
+            physician = service.getPhysicianById(id);
             response = Response.status(physician == null ? Status.NOT_FOUND : Status.OK).entity(physician).build();
         } else if (sc.isCallerInRole(USER_ROLE)) {
             WrappingCallerPrincipal wCallerPrincipal = (WrappingCallerPrincipal) sc.getCallerPrincipal();
@@ -84,7 +85,7 @@ public class PhysicianResource {
             if (physician != null && physician.getId() == id) {
                 response = Response.status(Status.OK).entity(physician).build();
             } else {
-            	//disallows a ‘USER_ROLE’ user from getting a physician that is not linked to the SecurityUser.
+                //disallows a ‘USER_ROLE’ user from getting a physician that is not linked to the SecurityUser.
                 throw new ForbiddenException("User trying to access resource it does not own (wrong userid)");
             }
         } else {
@@ -109,11 +110,11 @@ public class PhysicianResource {
     //Only an ‘ADMIN_ROLE’ user can associate a Medicine and/or Patient to a Physician.
     @RolesAllowed({ADMIN_ROLE})
     @Path(PHYSICIAN_PATIENT_MEDICINE_RESOURCE_PATH)
-    public Response updateMedicineForPhysicianPatient(@PathParam("physicianId") int physicianId, @PathParam("patientId") int patientId, Medicine newMedicine) {
+    public Response updateMedicineForPhysicianPatient(@PathParam(MyConstants.PHYSICIAN_ID_RESOURCE_NAME) int physicianId, @PathParam(MyConstants.PATIENT_ID_RESOURCE_NAME) int patientId, Medicine newMedicine) {
         Response response = null;
         Medicine medicine = service.setMedicineForPhysicianPatient(physicianId, patientId, newMedicine);
         response = Response.ok(medicine).build();
         return response;
     }
-    
+
 }
