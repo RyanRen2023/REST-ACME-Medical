@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `physician` (
 -- Table `medical_school`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `medical_school` (
-  `school_id` INT NOT NULL AUTO_INCREMENT,
+  `school_id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(100) NOT NULL,
   `public` BIT(1) NOT NULL,
   `created` DATETIME NULL,

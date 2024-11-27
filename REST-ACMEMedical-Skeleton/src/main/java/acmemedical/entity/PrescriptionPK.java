@@ -19,7 +19,7 @@ import jakarta.persistence.Embeddable;
 /**
  * The primary key class for the prescription database table.
  */
-//TODO PRPK01 - What annotation is used to define an object which can be embedded in other entities?
+//TODOo PRPK01 - What annotation is used to define an object which can be embedded in other entities?
 //Hint - @Access is used to establish where the annotation for JPA will be placed, field or properties. 
 @Embeddable
 @Access(AccessType.FIELD)

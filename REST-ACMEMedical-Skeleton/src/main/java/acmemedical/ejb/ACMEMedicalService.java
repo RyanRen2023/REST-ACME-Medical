@@ -3,7 +3,7 @@
  *
  * @author Teddy Yap
  * @author Shariar (Shawn) Emami
- * 
+ *
  */
 package acmemedical.ejb;
 
@@ -66,12 +66,12 @@ import acmemedical.entity.MedicalSchool;
 @Singleton
 public class ACMEMedicalService implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     private static final Logger LOG = LogManager.getLogger();
-    
+
     @PersistenceContext(name = PU_NAME)
     protected EntityManager em;
-    
+
     @Inject
     protected Pbkdf2PasswordHash pbAndjPasswordHash;
 
@@ -96,7 +96,7 @@ public class ACMEMedicalService implements Serializable {
     public void buildUserForNewPhysician(Physician newPhysician) {
         SecurityUser userForNewPhysician = new SecurityUser();
         userForNewPhysician.setUsername(
-            DEFAULT_USER_PREFIX + "_" + newPhysician.getFirstName() + "." + newPhysician.getLastName());
+                DEFAULT_USER_PREFIX + "_" + newPhysician.getFirstName() + "." + newPhysician.getLastName());
         Map<String, String> pbAndjProperties = new HashMap<>();
         pbAndjProperties.put(PROPERTY_ALGORITHM, DEFAULT_PROPERTY_ALGORITHM);
         pbAndjProperties.put(PROPERTY_ITERATIONS, DEFAULT_PROPERTY_ITERATIONS);
@@ -106,7 +106,10 @@ public class ACMEMedicalService implements Serializable {
         String pwHash = pbAndjPasswordHash.generate(DEFAULT_USER_PASSWORD.toCharArray());
         userForNewPhysician.setPwHash(pwHash);
         userForNewPhysician.setPhysician(newPhysician);
-        SecurityRole userRole = /* TODO ACMECS01 - Use NamedQuery on SecurityRole to find USER_ROLE */ null;
+        /* TODOo ACMECS01 - Use NamedQuery on SecurityRole to find USER_ROLE */
+        TypedQuery<SecurityRole> query = em.createNamedQuery(SecurityRole.ROLE_BY_NAME_QUERY, SecurityRole.class);
+        query.setParameter(PARAM1, USER_ROLE);
+        SecurityRole userRole = query.getSingleResult();
         userForNewPhysician.getRoles().add(userRole);
         userRole.getUsers().add(userForNewPhysician);
         em.persist(userForNewPhysician);
@@ -122,31 +125,29 @@ public class ACMEMedicalService implements Serializable {
                     if (p.getMedicine() != null) { // Medicine exists
                         Medicine medicine = em.find(Medicine.class, p.getMedicine().getId());
                         medicine.setMedicine(newMedicine.getDrugName(),
-                        				  newMedicine.getManufacturerName(),
-                        				  newMedicine.getDosageInformation());
+                                newMedicine.getManufacturerName(),
+                                newMedicine.getDosageInformation());
                         em.merge(medicine);
-                    }
-                    else { // Medicine does not exist
+                    } else { // Medicine does not exist
                         p.setMedicine(newMedicine);
                         em.merge(physicianToBeUpdated);
                     }
                 }
             });
             return newMedicine;
-        }
-        else return null;  // Physician doesn't exists
+        } else return null;  // Physician doesn't exists
     }
 
     /**
      * To update a physician
-     * 
-     * @param id - id of entity to update
+     *
+     * @param id                   - id of entity to update
      * @param physicianWithUpdates - entity with updated information
      * @return Entity with updated information
      */
     @Transactional
     public Physician updatePhysicianById(int id, Physician physicianWithUpdates) {
-    	Physician physicianToBeUpdated = getPhysicianById(id);
+        Physician physicianToBeUpdated = getPhysicianById(id);
         if (physicianToBeUpdated != null) {
             em.refresh(physicianToBeUpdated);
             em.merge(physicianWithUpdates);
@@ -157,7 +158,7 @@ public class ACMEMedicalService implements Serializable {
 
     /**
      * To delete a physician by id
-     * 
+     *
      * @param id - physician id to delete
      */
     @Transactional
@@ -165,17 +166,18 @@ public class ACMEMedicalService implements Serializable {
         Physician physician = getPhysicianById(id);
         if (physician != null) {
             em.refresh(physician);
-            TypedQuery<SecurityUser> findUser = 
-            /* TODO ACMECS02 - Use NamedQuery on SecurityRole to find this related Student
+             /* TODOo ACMECS02 - Use NamedQuery on SecurityRole to find this related Student
                so that when we remove it, the relationship from SECURITY_USER table
                is not dangling
-            */ null;
+            */
+            TypedQuery<SecurityUser> findUser = em.createNamedQuery(SecurityUser.USER_FOR_OWNING_PHYSICIAN_QUERY, SecurityUser.class);
+            findUser.setParameter(PARAM1, id);
             SecurityUser sUser = findUser.getSingleResult();
             em.remove(sUser);
             em.remove(physician);
         }
     }
-    
+
     public List<MedicalSchool> getAllMedicalSchools() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<MedicalSchool> cq = cb.createQuery(MedicalSchool.class);
@@ -190,21 +192,21 @@ public class ACMEMedicalService implements Serializable {
         specificMedicalSchoolQuery.setParameter(PARAM1, id);
         return specificMedicalSchoolQuery.getSingleResult();
     }
-    
+
     // These methods are more generic.
 
     public <T> List<T> getAll(Class<T> entity, String namedQuery) {
         TypedQuery<T> allQuery = em.createNamedQuery(namedQuery, entity);
         return allQuery.getResultList();
     }
-    
+
     public <T> T getById(Class<T> entity, String namedQuery, int id) {
         TypedQuery<T> allQuery = em.createNamedQuery(namedQuery, entity);
         allQuery.setParameter(PARAM1, id);
         return allQuery.getSingleResult();
     }
 
-//    @Transactional
+    //    @Transactional
 //    public MedicalSchool deleteMedicalSchool(int id) {
 //        //MedicalSchool ms = getMedicalSchoolById(id);
 //    	MedicalSchool ms = getById(MedicalSchool.class, MedicalSchool.SPECIFIC_MEDICAL_SCHOOL_QUERY_NAME, id);
@@ -225,47 +227,47 @@ public class ACMEMedicalService implements Serializable {
 //        }
 //        return null;
 //    }
-@Transactional
-public MedicalSchool deleteMedicalSchool(int id) {
-    MedicalSchool ms = getById(MedicalSchool.class, MedicalSchool.SPECIFIC_MEDICAL_SCHOOL_QUERY, id);
-    if (ms != null) {
-        Set<MedicalTraining> medicalTrainings = ms.getMedicalTrainings();
-        List<MedicalTraining> list = new LinkedList<>();
-        medicalTrainings.forEach(list::add);
+    @Transactional
+    public MedicalSchool deleteMedicalSchool(int id) {
+        MedicalSchool ms = getById(MedicalSchool.class, SPECIFIC_MEDICAL_SCHOOL_QUERY_NAME, id);
+        if (ms != null) {
+            Set<MedicalTraining> medicalTrainings = ms.getMedicalTrainings();
+            List<MedicalTraining> list = new LinkedList<>();
+            medicalTrainings.forEach(list::add);
 
-        list.forEach(mt -> {
-            // 使用 JPQL 查询找到关联的 MedicalCertificate
-            MedicalCertificate mc = null;
-            try {
-                mc = em.createQuery(
-                                "SELECT mc FROM MedicalCertificate mc WHERE mc.medicalTraining.trainingId = :trainingId", MedicalCertificate.class)
-                        .setParameter("trainingId", mt.getTrainingId())
-                        .getSingleResult();
-            } catch (Exception e) {
-                // 如果找不到匹配的结果，getSingleResult() 会抛出异常，因此需要处理。
-                LOG.warn("No MedicalCertificate found for trainingId: " + mt.getTrainingId());
-            }
+            list.forEach(mt -> {
+                // 使用 JPQL 查询找到关联的 MedicalCertificate
+                MedicalCertificate mc = null;
+                try {
+                    mc = em.createQuery(
+                                    "SELECT mc FROM MedicalCertificate mc WHERE mc.medicalTraining.trainingId = :trainingId", MedicalCertificate.class)
+                            .setParameter("trainingId", mt.getId())
+                            .getSingleResult();
+                } catch (Exception e) {
+                    // 如果找不到匹配的结果，getSingleResult() 会抛出异常，因此需要处理。
+                    LOG.warn("No MedicalCertificate found for trainingId: " + mt.getId());
+                }
 
-            if (mc != null) {
-                // 解除 MedicalCertificate 与 MedicalTraining 的关联
-                mc.setMedicalTraining(null);
-                em.merge(mc);
-            }
-            em.remove(mt);
-        });
+                if (mc != null) {
+                    // 解除 MedicalCertificate 与 MedicalTraining 的关联
+                    mc.setMedicalTraining(null);
+                    em.merge(mc);
+                }
+                em.remove(mt);
+            });
 
-        em.remove(ms);
+            em.remove(ms);
+        }
+        return ms;
     }
-    return ms;
-}
 
 
     // Please study & use the methods below in your test suites
-    
+
     public boolean isDuplicated(MedicalSchool newMedicalSchool) {
         TypedQuery<Long> allMedicalSchoolsQuery = em.createNamedQuery(IS_DUPLICATE_QUERY_NAME, Long.class);
         allMedicalSchoolsQuery.setParameter(PARAM1, newMedicalSchool.getName());
-        return (allMedicalSchoolsQuery.getSingleResult() >= 1);
+        return (allMedicalSchoolsQuery.getSingleResult()>=1);
     }
 
     @Transactional
@@ -276,7 +278,7 @@ public MedicalSchool deleteMedicalSchool(int id) {
 
     @Transactional
     public MedicalSchool updateMedicalSchool(int id, MedicalSchool updatingMedicalSchool) {
-    	MedicalSchool medicalSchoolToBeUpdated = getMedicalSchoolById(id);
+        MedicalSchool medicalSchoolToBeUpdated = getMedicalSchoolById(id);
         if (medicalSchoolToBeUpdated != null) {
             em.refresh(medicalSchoolToBeUpdated);
             medicalSchoolToBeUpdated.setName(updatingMedicalSchool.getName());
@@ -285,13 +287,13 @@ public MedicalSchool deleteMedicalSchool(int id) {
         }
         return medicalSchoolToBeUpdated;
     }
-    
+
     @Transactional
     public MedicalTraining persistMedicalTraining(MedicalTraining newMedicalTraining) {
         em.persist(newMedicalTraining);
         return newMedicalTraining;
     }
-    
+
     public MedicalTraining getMedicalTrainingById(int mtId) {
         TypedQuery<MedicalTraining> allMedicalTrainingQuery = em.createNamedQuery(MedicalTraining.FIND_BY_ID, MedicalTraining.class);
         allMedicalTrainingQuery.setParameter(PARAM1, mtId);
@@ -300,7 +302,7 @@ public MedicalSchool deleteMedicalSchool(int id) {
 
     @Transactional
     public MedicalTraining updateMedicalTraining(int id, MedicalTraining medicalTrainingWithUpdates) {
-    	MedicalTraining medicalTrainingToBeUpdated = getMedicalTrainingById(id);
+        MedicalTraining medicalTrainingToBeUpdated = getMedicalTrainingById(id);
         if (medicalTrainingToBeUpdated != null) {
             em.refresh(medicalTrainingToBeUpdated);
             em.merge(medicalTrainingWithUpdates);
@@ -308,5 +310,5 @@ public MedicalSchool deleteMedicalSchool(int id) {
         }
         return medicalTrainingToBeUpdated;
     }
-    
+
 }

@@ -8,3 +8,11 @@ REST-ACMEMedical-Skeleton/.gitignore
 REST-ACMEMedical-Skeleton/.settings/org.eclipse.jdt.apt.core.prefs
 .DS_Store
 REST-ACMEMedical-Skeleton
+REST-ACMEMedical-Skeleton/.settings/org.eclipse.wst.common.project.facet.core.xml
+REST-ACMEMedical-Skeleton/.classpath
+REST-ACMEMedical-Skeleton/.settings/org.eclipse.wst.common.project.facet.core.xml
+REST-ACMEMedical-Skeleton/src/main/webapp/META-INF/MANIFEST.MF
+REST-ACMEMedical-Skeleton/target/test-classes/acmemedical/MyObjectMapperProvider.class
+REST-ACMEMedical-Skeleton/target/test-classes/acmemedical/PBKDF2HashGenerator.class
+REST-ACMEMedical-Skeleton/target/test-classes/acmemedical/TestACMEMedicalSystem.class
+REST-ACMEMedical-Skeleton/target/test-classes/acmemedical/TestACMEMedicalSystem$1.class

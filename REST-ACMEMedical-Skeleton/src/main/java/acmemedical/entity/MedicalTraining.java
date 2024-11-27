@@ -11,6 +11,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 
 @SuppressWarnings("unused")
@@ -18,33 +21,37 @@ import jakarta.persistence.*;
 /**
  * The persistent class for the medical_training database table.
  */
-//TODO MT01 - Add the missing annotations.
+//TODOo MT01 - Add the missing annotations.
 @Entity
-@Table( name = "medical_training")
+@Table(name = "medical_training")
 @NamedQuery(name = MedicalTraining.FIND_ALL, query = "SELECT mt FROM MedicalTraining mt")
-@NamedQuery( name = MedicalTraining.FIND_BY_ID, query = "SELECT bb FROM MedicalTraining bb")
-@AttributeOverride( name = "id", column = @Column( name = "training_id"))
-
-//TODO MT02 - Do we need a mapped super class?  If so, which one?
+@NamedQuery(name = MedicalTraining.FIND_BY_ID, query = "SELECT mt FROM MedicalTraining mt WHERE mt.id = :param1")
+@AttributeOverride(name = "id", column = @Column(name = "training_id"))
+//TODOo MT02 - Do we need a mapped super class?  If so, which one? PojoBase
 public class MedicalTraining extends PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 	public static final String FIND_ALL = "MedicalTraining.findAll";
 	public static final String FIND_BY_ID = "MedicalTraining.findById";
 
-	// TODO MT03 - Add annotations for M:1.  What should be the cascade and fetch types?
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="school_id")
+	// TODOo MT03 - Add annotations for M:1. What should be the cascade and fetch
+	// types?
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
+	@JoinColumn(name = "school_id")
+	@JsonBackReference(value="training-school")
 	private MedicalSchool school;
 
-	// TODO MT04 - Add annotations for 1:1.  What should be the cascade and fetch types?
+	// TODOo MT04 - Add annotations for 1:1. What should be the cascade and fetch
+	// types?
 //	@OneToOne(cascade=CascadeType.MERGE, fetch = FetchType.LAZY, optional = true)
 //	@JoinColumn( name = "certificate_id", referencedColumnName = "certificate_id", nullable = true, insertable = false, updatable = false)
 //	private MedicalCertificate certificate;
-	//@OneToOne(cascade=CascadeType.MERGE, fetch = FetchType.LAZY, optional = true)
-	//@JoinColumn(name = "certificate_id", referencedColumnName = "certificate_id", nullable = true)
-	@OneToOne(mappedBy = "medicalTraining", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private MedicalCertificate certificate;
 
+	// @OneToOne(cascade=CascadeType.MERGE, fetch = FetchType.LAZY, optional = true)
+	// @JoinColumn(name = "certificate_id", referencedColumnName = "certificate_id",
+	// nullable = true)
+	@OneToOne(mappedBy = "medicalTraining", fetch = FetchType.LAZY, orphanRemoval = true)
+	@JsonManagedReference("training-certificate")
+	private MedicalCertificate certificate;
 
 	@Embedded
 	private DurationAndStatus durationAndStatus;
@@ -77,9 +84,10 @@ public class MedicalTraining extends PojoBase implements Serializable {
 		this.durationAndStatus = durationAndStatus;
 	}
 
-	//Inherited hashCode/equals NOT sufficient for this Entity class
+	// Inherited hashCode/equals NOT sufficient for this Entity class
 	/**
-	 * Very important:  Use getter's for member variables because JPA sometimes needs to intercept those calls<br/>
+	 * Very important: Use getter's for member variables because JPA sometimes needs
+	 * to intercept those calls<br/>
 	 * and go to the database to retrieve the value
 	 */
 	@Override
@@ -87,7 +95,8 @@ public class MedicalTraining extends PojoBase implements Serializable {
 		final int prime = 31;
 		int result = super.hashCode();
 		// Only include member variables that really contribute to an object's identity
-		// i.e. if variables like version/updated/name/etc. change throughout an object's lifecycle,
+		// i.e. if variables like version/updated/name/etc. change throughout an
+		// object's lifecycle,
 		// they shouldn't be part of the hashCode calculation
 
 		// include DurationAndStatus in identity
@@ -103,30 +112,31 @@ public class MedicalTraining extends PojoBase implements Serializable {
 			return false;
 		}
 		if (obj instanceof MedicalTraining otherMedicalTraining) {
-			// See comment (above) in hashCode():  Compare using only member variables that are
+			// See comment (above) in hashCode(): Compare using only member variables that
+			// are
 			// truly part of an object's identity
-			return Objects.equals(this.getId(), otherMedicalTraining.getId()) &&
-					Objects.equals(this.getDurationAndStatus(), otherMedicalTraining.getDurationAndStatus());
+			return Objects.equals(this.getId(), otherMedicalTraining.getId())
+					&& Objects.equals(this.getDurationAndStatus(), otherMedicalTraining.getDurationAndStatus());
 		}
 		return false;
 	}
 
-	// 类的成员变量
-	private int trainingId;
-
-	// Getter 方法：返回 trainingId 作为 String
-	public String getTrainingId() {
-		return String.valueOf(trainingId);
-	}
-
-	// Setter 方法：接受一个 String 并将其转换为 int
-	public void setTrainingId(String trainingId) {
-		try {
-			this.trainingId = Integer.parseInt(trainingId);
-		} catch (NumberFormatException e) {
-			// 在输入的字符串无法转换为整数时处理错误（可以根据需求调整这里的逻辑）
-			System.err.println("Invalid training ID: " + trainingId);
-		}
-	}
+//	// 类的成员变量
+//	private int trainingId;
+//
+//	// Getter 方法：返回 trainingId 作为 String
+//	public String getTrainingId() {
+//		return String.valueOf(trainingId);
+//	}
+//
+//	// Setter 方法：接受一个 String 并将其转换为 int
+//	public void setTrainingId(String trainingId) {
+//		try {
+//			this.trainingId = Integer.parseInt(trainingId);
+//		} catch (NumberFormatException e) {
+//			// 在输入的字符串无法转换为整数时处理错误（可以根据需求调整这里的逻辑）
+//			System.err.println("Invalid training ID: " + trainingId);
+//		}
+//	}
 
 }

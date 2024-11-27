@@ -17,31 +17,31 @@ import java.util.Objects;
  * Abstract class that is base of (class) hierarchy for all @Entity classes
  */
 
-// TODO PB01 - Define this class as the superclass of all entities.
+// TODOo PB01 - Define this class as the superclass of all entities.
 @MappedSuperclass
-// TODO PB02 - Place all JPA annotations on fields.
+// TODOo PB02 - Place all JPA annotations on fields.
 @Access(AccessType.FIELD)
-// TODO PB03 - Add annotation for listener class.
+// TODOo PB03 - Add annotation for listener class.
 @EntityListeners(PojoListener.class)
 public abstract class PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	// TODO PB04 - Define this field as the primary key.
+	// TODOo PB04 - Define this field as the primary key.
 	@Id
-	// TODO PB05 - Use an auto-incremented primary key.
+	// TODOo PB05 - Use an auto-incremented primary key.
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	protected int id;
 
-	// TODO PB06 - Define this field to handle optimistic locking.
+	// TODOo PB06 - Define this field to handle optimistic locking.
 	@Version
 	protected int version;
 
-	// TODO PB07 - Map this field to the "created" column, cannot be null, and not updatable after creation.
+	// TODOo PB07 - Map this field to the "created" column, cannot be null, and not updatable after creation.
 	@Column(name = "created", nullable = false, updatable = false)
 	protected LocalDateTime created;
 
-	// TODO PB08 - Map this field to the "updated" column, cannot be null.
+	// TODOo PB08 - Map this field to the "updated" column, cannot be null.
 	@Column(name = "updated", nullable = false)
 	protected LocalDateTime updated;
 

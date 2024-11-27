@@ -15,20 +15,20 @@ import jakarta.persistence.Embeddable;
 
 @SuppressWarnings("unused")
 
-// TODO DS01 - This class is not an entity, however, it can be embedded in other entities. Add missing annotation.
+// TODOo DS01 - This class is not an entity, however, it can be embedded in other entities. Add missing annotation.
 @Embeddable
 public class DurationAndStatus implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	// TODO DS02 - Add annotations
+	// TODOo DS02 - Add annotations
 	@Column(name = "start_date", nullable = false)
 	private LocalDateTime startDate;
 
-	// TODO DS03 - Add annotations
+	// TODOo DS03 - Add annotations
 	@Column(name = "end_date", nullable = true)
 	private LocalDateTime endDate;
 
-	// TODO DS04 - Add annotations
+	// TODOo DS04 - Add annotations
 	@Column(name = "active", columnDefinition = "BIT(1)", nullable = false)
 	private byte active;
 

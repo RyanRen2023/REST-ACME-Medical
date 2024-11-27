@@ -9,6 +9,9 @@ package acmemedical.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Access;
 import jakarta.persistence.AccessType;
 import jakarta.persistence.Basic;
@@ -42,18 +45,21 @@ public class Prescription extends PojoBaseCompositeKey<PrescriptionPK> implement
 	@MapsId("physicianId")
     @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "physician_id", referencedColumnName = "id", nullable = false)
+	@JsonBackReference(value="physician-prescriptions")
 	private Physician physician;
 
-	//TODO PR01 - Add missing annotations.  Similar to physician, this field is a part of the composite key of this entity.  What should be the cascade and fetch types?  Reference to a patient is not optional.
+	//TODOo PR01 - Add missing annotations.  Similar to physician, this field is a part of the composite key of this entity.  What should be the cascade and fetch types?  Reference to a patient is not optional.
 	@MapsId("patientId")
 	@ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "patient_id", referencedColumnName = "patient_id", nullable = false)
+	@JsonBackReference(value="patient-prescriptions")
 	private Patient patient;
 
 
-	//TODO PR02 - Add missing annotations.  What should be the cascade and fetch types?
+	//TODOo PR02 - Add missing annotations.  What should be the cascade and fetch types?
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "medicine_id", referencedColumnName = "medicine_id", nullable = true)
+	@JsonBackReference(value="medicine-prescriptions")
 	private Medicine medicine;
 
 	@Column(name = "number_of_refills")

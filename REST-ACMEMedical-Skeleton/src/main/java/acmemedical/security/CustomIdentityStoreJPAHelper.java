@@ -40,7 +40,7 @@ public class CustomIdentityStoreJPAHelper {
     public SecurityUser findUserByName(String username) {
         LOG.debug("find a SecurityUser by name = {}", username);
         SecurityUser user = null;
-        /* TODO CISJPAH01 -
+        /* TODOo CISJPAH01 -
          *  Call the entity manager's createNamedQuery() method to call a named query on SecurityUser
          *  The named query should be labeled "SecurityUser.userByName" and accepts a parameter called "param1"
          *
@@ -51,6 +51,13 @@ public class CustomIdentityStoreJPAHelper {
          *
          */
         // @ThisAnnotationDoesNotExistSoYouMustFixThisBeforeTheProjectCanDeploy
+        try{
+            TypedQuery<SecurityUser> query = em.createNamedQuery(SecurityUser.SECURITY_USER_BY_NAME_QUERY, SecurityUser.class);
+            query.setParameter(PARAM1, username);
+            user = query.getSingleResult();
+        }catch(NoResultException e){
+            LOG.warn("No user found with username={}", username);
+        }
         return user;
     }
 

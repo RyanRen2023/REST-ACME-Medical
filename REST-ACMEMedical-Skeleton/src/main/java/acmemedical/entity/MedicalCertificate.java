@@ -8,12 +8,17 @@ package acmemedical.entity;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.FetchType;
 
@@ -24,54 +29,60 @@ import jakarta.persistence.FetchType;
  */
 @Entity
 @Table(name = "medical_certificate")
+@AttributeOverride(name = "id", column = @Column(name = "certificate_id"))
+@NamedQuery(name = MedicalCertificate.FIND_BY_ID, query = "select mc from MedicalCertificate mc where mc.id = :param1")
 public class MedicalCertificate extends PojoBase implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public static final String FIND_BY_ID = "MedicalCertificate.findById";
+	public static final String FIND_BY_ID = "MedicalCertificate.findById";
 
-    // TODO MC01 - Add missing annotations. Bidirectional mapping to MedicalTraining
-    @OneToOne(cascade=CascadeType.ALL, orphanRemoval=true)
-    @JoinColumn(name = "training_id", referencedColumnName = "training_id")
-    private MedicalTraining medicalTraining;
+	// TODOo MC01 - Add missing annotations. Bidirectional mapping to
+	// MedicalTraining
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "training_id", referencedColumnName = "training_id")
+	@JsonBackReference("training-certificate")
+	private MedicalTraining medicalTraining;
 
-    // TODO MC02 - Add missing annotations. Reference to Physician entity, required
-    @ManyToOne(cascade=CascadeType.MERGE,fetch = FetchType.LAZY)
-    @JoinColumn(name = "physician_id")
-    private Physician owner;
+	// TODOo MC02 - Add missing annotations. Reference to Physician entity, required
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "physician_id", nullable = false)
+	@JsonBackReference(value="physician-certificate")
+	private Physician owner;
 
-    // TODO MC03 - Add missing annotations. Signed column to track the status of the certificate
-    @Column(name = "signed", columnDefinition = "BIT(1)", nullable = false)
-    private byte signed;
+	// TODOo MC03 - Add missing annotations. Signed column to track the status of the
+	// certificate
+	@Column(name = "signed", nullable = false)
+	private boolean signed;
 
-    public MedicalCertificate() {
-        super();
-    }
+	public MedicalCertificate() {
+		super();
+	}
 
-    public MedicalTraining getMedicalTraining() {
-        return medicalTraining;
-    }
+	public MedicalTraining getMedicalTraining() {
+		return medicalTraining;
+	}
 
-    public void setMedicalTraining(MedicalTraining medicalTraining) {
-        this.medicalTraining = medicalTraining;
-    }
+	public void setMedicalTraining(MedicalTraining medicalTraining) {
+		this.medicalTraining = medicalTraining;
+	}
 
-    public Physician getOwner() {
-        return owner;
-    }
+	public Physician getOwner() {
+		return owner;
+	}
 
-    public void setOwner(Physician owner) {
-        this.owner = owner;
-    }
+	public void setOwner(Physician owner) {
+		this.owner = owner;
+	}
 
-    public byte getSigned() {
-        return signed;
-    }
+	public boolean getSigned() {
+		return signed;
+	}
 
-    public void setSigned(byte signed) {
-        this.signed = signed;
-    }
+	public void setSigned(boolean signed) {
+		this.signed = signed;
+	}
 
-    public void setSigned(boolean signed) {
-        this.signed = (byte) (signed ? 0b0001 : 0b0000);
-    }
+//	public void setSigned(boolean signed) {
+//		this.signed = (byte) (signed ? 0b0001 : 0b0000);
+//	}
 }

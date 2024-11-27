@@ -96,4 +96,14 @@ public class TestACMEMedicalSystem {
         assertThat(physicians, is(not(empty())));
         assertThat(physicians, hasSize(1));
     }
+    
+    @Test
+    public void test01_all_physicians_with_userrole() throws JsonMappingException, JsonProcessingException {
+        Response response = webTarget
+            .register(userAuth)
+            .path(PHYSICIAN_RESOURCE_NAME)
+            .request()
+            .get();
+        assertThat(response.getStatus(), is(403));
+    }
 }
