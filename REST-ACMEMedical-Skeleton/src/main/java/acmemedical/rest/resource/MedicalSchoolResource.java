@@ -33,7 +33,10 @@ import org.apache.logging.log4j.Logger;
 
 import acmemedical.ejb.ACMEMedicalService;
 import acmemedical.entity.MedicalTraining;
+import acmemedical.entity.PrivateSchool;
+import acmemedical.entity.PublicSchool;
 import acmemedical.entity.MedicalSchool;
+import acmemedical.entity.MedicalSchoolDTO;
 
 @Path(MEDICAL_SCHOOL_RESOURCE_NAME)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -49,6 +52,7 @@ public class MedicalSchoolResource {
     protected SecurityContext sc;
     
     @GET
+    @RolesAllowed({ADMIN_ROLE, USER_ROLE})
     public Response getMedicalSchools() {
         LOG.debug("Retrieving all medical schools...");
         List<MedicalSchool> medicalSchools = service.getAllMedicalSchools();
@@ -64,7 +68,12 @@ public class MedicalSchoolResource {
     public Response getMedicalSchoolById(@PathParam("medicalSchoolId") int medicalSchoolId) {
         LOG.debug("Retrieving medical school with id = {}", medicalSchoolId);
         MedicalSchool medicalSchool = service.getMedicalSchoolById(medicalSchoolId);
-        Response response = Response.ok(medicalSchool).build();
+        Response response;
+        if(medicalSchool != null) {
+        	response = Response.ok(sc).build();
+        }else {
+        	response = Response.status(Status.OK).entity("No School found").build();
+        }        	
         return response;
     }
 
@@ -74,24 +83,32 @@ public class MedicalSchoolResource {
     @Path("/{medicalSchoolId}")
     public Response deleteMedicalSchool(@PathParam("medicalSchoolId") int msId) {
         LOG.debug("Deleting medical school with id = {}", msId);
-        MedicalSchool sc = service.deleteMedicalSchool(msId);
-        Response response = Response.ok(sc).build();
+        MedicalSchool medicalSchool = service.deleteMedicalSchool(msId);
+        Response response;
+        if(medicalSchool != null) {
+        	response = Response.ok(medicalSchool).build();
+        }else {
+        	response = Response.status(Status.OK).entity("No School found").build();
+        }        	
         return response;
     }
     
     // Please try to understand and test the below methods:
     @RolesAllowed({ADMIN_ROLE})
     @POST
-    public Response addMedicalSchool(MedicalSchool newMedicalSchool) {
-        LOG.debug("Adding a new medical school = {}", newMedicalSchool);
-        if (service.isDuplicated(newMedicalSchool)) {
-            HttpErrorResponse err = new HttpErrorResponse(Status.CONFLICT.getStatusCode(), "Entity already exists");
-            return Response.status(Status.CONFLICT).entity(err).build();
-        }
-        else {
-            MedicalSchool tempMedicalSchool = service.persistMedicalSchool(newMedicalSchool);
-            return Response.ok(tempMedicalSchool).build();
-        }
+    public Response addMedicalSchool(MedicalSchoolDTO newMedicalSchoolDTO) {
+    	MedicalSchool medicalSchool = null;
+    	if(newMedicalSchoolDTO.getEntityType().equals("private_school")) {
+    		medicalSchool = new PrivateSchool(newMedicalSchoolDTO.getName());
+    		
+    	}else if(newMedicalSchoolDTO.getEntityType().equals("public_school")) {
+    		medicalSchool = new PublicSchool(newMedicalSchoolDTO.getName());
+    	}else {
+    	    return Response.status(Status.BAD_REQUEST).entity("Invalid entity type").build();
+    	}
+        LOG.debug("Adding a new medical school = {}", medicalSchool);
+        MedicalSchool tempMedicalSchool = service.persistMedicalSchool(medicalSchool);
+        return Response.ok(tempMedicalSchool).build();
     }
 
     @RolesAllowed({ADMIN_ROLE})

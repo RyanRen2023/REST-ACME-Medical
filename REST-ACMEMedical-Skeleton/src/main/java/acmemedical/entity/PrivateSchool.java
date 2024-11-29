@@ -19,8 +19,15 @@ import java.io.Serializable;
 public class PrivateSchool extends MedicalSchool implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-//	public PrivateSchool() {
-//		super(false);
-//	}
+	public PrivateSchool(String name) {
+		super(name);
+	}
+
+	public PrivateSchool() {
+		super();
+	}
+	
+	
+	
 
 }

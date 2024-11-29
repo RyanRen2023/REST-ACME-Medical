@@ -14,6 +14,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
@@ -28,6 +29,9 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 /**
  * The persistent class for the medical_school database table.
@@ -39,8 +43,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "public", discriminatorType = DiscriminatorType.INTEGER) // Adding discriminator column
 @NamedQuery(name = MedicalSchool.ALL_MEDICAL_SCHOOLS_QUERY_NAME, query = "SELECT ms FROM MedicalSchool ms")
-@NamedQuery(name = MedicalSchool.SPECIFIC_MEDICAL_SCHOOL_QUERY_NAME, query = "SELECT ms FROM MedicalSchool ms WHERE ms.id = :param1")
-@NamedQuery(name = MedicalSchool.IS_DUPLICATE_QUERY_NAME, query = "SELECT COUNT(ms) FROM MedicalSchool ms WHERE ms.name = :param1")
+ @NamedQuery(name = MedicalSchool.IS_DUPLICATE_QUERY_NAME, query = "SELECT COUNT(ms) FROM MedicalSchool ms WHERE ms.name = :param1")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "entity-type")
+@JsonSubTypes({ @Type(value = PrivateSchool.class, name = "private_school"),
+		@Type(value = PublicSchool.class, name = "private_school") })
 public abstract class MedicalSchool extends PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -52,29 +58,26 @@ public abstract class MedicalSchool extends PojoBase implements Serializable {
 	@Column(name = "name")
 	private String name;
 
-	@OneToMany(mappedBy = "school", orphanRemoval = true)
-	@JsonManagedReference(value="training-school")
+	@OneToMany(mappedBy = "school", fetch = FetchType.LAZY, orphanRemoval = true)
+	@JsonManagedReference(value = "training-school")
 	private Set<MedicalTraining> medicalTrainings = new HashSet<>();
-	
+
 //	@Column(name = "public")  // This column is used for the discriminator
 //    private boolean isPublic;  // The field corresponding to the "public" column, which indicates if it's a public school.
-	
+
 	public MedicalSchool() {
 		super();
 	}
-	
-	
-
-	
 
 //	public MedicalSchool(boolean isPublic) {
 //		super();
 //		this.isPublic = isPublic;
 //	}
 
-
-
-
+	public MedicalSchool(String name) {
+		super();
+		this.name = name;
+	}
 
 	public Set<MedicalTraining> getMedicalTrainings() {
 		return medicalTrainings;
@@ -91,8 +94,6 @@ public abstract class MedicalSchool extends PojoBase implements Serializable {
 	public String getName() {
 		return name;
 	}
-	
-	
 
 //	public boolean isPublic() {
 //		return isPublic;
@@ -103,8 +104,6 @@ public abstract class MedicalSchool extends PojoBase implements Serializable {
 //	public void setPublic(boolean isPublic) {
 //		this.isPublic = isPublic;
 //	}
-
-
 
 	@Override
 	public int hashCode() {

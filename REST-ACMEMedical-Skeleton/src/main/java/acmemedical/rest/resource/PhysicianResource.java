@@ -23,6 +23,7 @@ import jakarta.ejb.EJB;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.SecurityContext;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.ForbiddenException;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -116,5 +117,24 @@ public class PhysicianResource {
         response = Response.ok(medicine).build();
         return response;
     }
+    
+    @DELETE
+    @RolesAllowed({ADMIN_ROLE})
+    @Path(RESOURCE_PATH_ID_PATH)
+    public Response deletePhysicianById(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id) {
+        LOG.debug("try to delete specific physician " + id);
+        Response response = null;
+
+        if (sc.isCallerInRole(ADMIN_ROLE)) {
+            service.deletePhysicianById(id);
+            response = Response.status(Status.OK).build();
+        } else {
+            response = Response.status(Status.BAD_REQUEST).build();
+        }
+        return response;
+    }
+    
+
+    
 
 }

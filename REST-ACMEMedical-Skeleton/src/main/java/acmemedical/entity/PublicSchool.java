@@ -20,10 +20,15 @@ import java.io.Serializable;
 public class PublicSchool extends MedicalSchool implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-//
-//	public PublicSchool() {
-//		super(true);
-//	}
+
+	public PublicSchool(String name) {
+		super(name);
+	}
+
+
+	public PublicSchool() {
+		super();
+	}
 	
 	
 
