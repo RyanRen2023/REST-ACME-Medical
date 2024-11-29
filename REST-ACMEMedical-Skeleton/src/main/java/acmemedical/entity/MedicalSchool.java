@@ -43,10 +43,13 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "public", discriminatorType = DiscriminatorType.INTEGER) // Adding discriminator column
 @NamedQuery(name = MedicalSchool.ALL_MEDICAL_SCHOOLS_QUERY_NAME, query = "SELECT ms FROM MedicalSchool ms")
- @NamedQuery(name = MedicalSchool.IS_DUPLICATE_QUERY_NAME, query = "SELECT COUNT(ms) FROM MedicalSchool ms WHERE ms.name = :param1")
+@NamedQuery(name = MedicalSchool.SPECIFIC_MEDICAL_SCHOOL_QUERY_NAME, query = "SELECT ms FROM MedicalSchool ms where ms.id = :param1")
+@NamedQuery(name = MedicalSchool.IS_DUPLICATE_QUERY_NAME, query = "SELECT COUNT(ms) FROM MedicalSchool ms WHERE ms.name = :param1")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "entity-type")
-@JsonSubTypes({ @Type(value = PrivateSchool.class, name = "private_school"),
-		@Type(value = PublicSchool.class, name = "private_school") })
+@JsonSubTypes({ 
+	@Type(value = PrivateSchool.class, name = "private_school"),
+	@Type(value = PublicSchool.class, name = "public_school") 
+})
 public abstract class MedicalSchool extends PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -57,9 +60,9 @@ public abstract class MedicalSchool extends PojoBase implements Serializable {
 
 	@Column(name = "name")
 	private String name;
-
-	@OneToMany(mappedBy = "school", fetch = FetchType.LAZY, orphanRemoval = true)
-	@JsonManagedReference(value = "training-school")
+//	@JsonManagedReference(value = "training-school")
+	@JsonBackReference(value="training-school")
+	@OneToMany(mappedBy = "school", fetch = FetchType.LAZY, orphanRemoval = true)	
 	private Set<MedicalTraining> medicalTrainings = new HashSet<>();
 
 //	@Column(name = "public")  // This column is used for the discriminator

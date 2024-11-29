@@ -70,7 +70,7 @@ public class MedicalSchoolResource {
         MedicalSchool medicalSchool = service.getMedicalSchoolById(medicalSchoolId);
         Response response;
         if(medicalSchool != null) {
-        	response = Response.ok(sc).build();
+        	response = Response.ok(medicalSchool).build();
         }else {
         	response = Response.status(Status.OK).entity("No School found").build();
         }        	

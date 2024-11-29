@@ -12,6 +12,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
@@ -35,9 +36,10 @@ public class MedicalTraining extends PojoBase implements Serializable {
 
 	// TODOo MT03 - Add annotations for M:1. What should be the cascade and fetch
 	// types?
+//	@JsonBackReference(value="training-school")
+	@JsonManagedReference(value = "training-school")
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "school_id")
-	@JsonBackReference(value="training-school")
 	private MedicalSchool school;
 
 	// TODOo MT04 - Add annotations for 1:1. What should be the cascade and fetch
@@ -49,7 +51,7 @@ public class MedicalTraining extends PojoBase implements Serializable {
 	// @OneToOne(cascade=CascadeType.MERGE, fetch = FetchType.LAZY, optional = true)
 	// @JoinColumn(name = "certificate_id", referencedColumnName = "certificate_id",
 	// nullable = true)
-	@OneToOne(mappedBy = "medicalTraining", fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToOne(mappedBy = "medicalTraining", fetch = FetchType.LAZY)
 	@JsonManagedReference("training-certificate")
 	private MedicalCertificate certificate;
 

@@ -12,6 +12,8 @@ import static acmemedical.utility.MyConstants.PU_NAME;
 
 import static java.util.Collections.emptySet;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -54,7 +56,12 @@ public class CustomIdentityStoreJPAHelper {
         try{
             TypedQuery<SecurityUser> query = em.createNamedQuery(SecurityUser.SECURITY_USER_BY_NAME_QUERY, SecurityUser.class);
             query.setParameter(PARAM1, username);
-            user = query.getSingleResult();
+            List<SecurityUser> users = query.getResultList();
+            if(users != null && users.size() > 0)
+            	user = users.get(0);
+            else {
+            	throw new NoResultException();
+            }
         }catch(NoResultException e){
             LOG.warn("No user found with username={}", username);
         }
@@ -63,10 +70,13 @@ public class CustomIdentityStoreJPAHelper {
 
     public Set<String> findRoleNamesForUser(String username) {
         LOG.debug("find Roles For Username={}", username);
-        Set<String> roleNames = emptySet();
+        Set<String> roleNames = new HashSet<>();
         SecurityUser securityUser = findUserByName(username);
         if (securityUser != null) {
-            roleNames = securityUser.getRoles().stream().map(s -> s.getRoleName()).collect(Collectors.toSet());
+        	Set<SecurityRole> roles = securityUser.getRoles();
+        	for(SecurityRole role : roles) {
+        		roleNames.add(role.getRoleName());
+        	}
         }
         return roleNames;
     }

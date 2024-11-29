@@ -193,18 +193,21 @@ public class ACMEMedicalService implements Serializable {
 	// SPECIFIC_MEDICAL_SCHOOL_QUERY_NAME
 	// includes JOIN FETCH that we cannot add to the above API
 	public MedicalSchool getMedicalSchoolById(int id) {
-		
-		 try {
-		        TypedQuery<MedicalSchool> specificMedicalSchoolQuery = em.createNamedQuery(SPECIFIC_MEDICAL_SCHOOL_QUERY_NAME,
-		                MedicalSchool.class);
-		        specificMedicalSchoolQuery.setParameter(PARAM1, id);
-		        return specificMedicalSchoolQuery.getSingleResult();
-		    } catch (NoResultException e) {
-		        return null;  // or you can log the exception if needed
-		    } catch (Exception e) {
-		        // General exception handling
-		    	return null;  // or you can log the exception if needed
-		    }
+		MedicalSchool ms = null;
+		try {
+			TypedQuery<MedicalSchool> specificMedicalSchoolQuery = em
+					.createNamedQuery(MedicalSchool.SPECIFIC_MEDICAL_SCHOOL_QUERY_NAME, MedicalSchool.class);
+			specificMedicalSchoolQuery.setParameter(PARAM1, id);
+			ms = specificMedicalSchoolQuery.getSingleResult();
+		} catch (Exception e) {
+			if (e instanceof NoResultException) {
+				LOG.info("No school found with id {}.", id);
+			}
+			// General exception handling for other unexpected errors
+			LOG.error("An error occurred while retrieving MedicalSchool with id {}: {}", id, e.getMessage(), e);
+
+		}
+		return ms;
 	}
 
 	// These methods are more generic.
@@ -467,72 +470,72 @@ public class ACMEMedicalService implements Serializable {
 		}
 		return existingPatient;
 	}
-	
+
 	@Transactional
 	public MedicalTraining deleteMedicalTraining(int id) {
-	    MedicalTraining medicalTraining = em.find(MedicalTraining.class, id);
-	    if (medicalTraining != null) {
-	        // Remove associated MedicalCertificate if it exists
-	        if (medicalTraining.getCertificate() != null) {
-	            MedicalCertificate certificate = medicalTraining.getCertificate();
-	            certificate.setMedicalTraining(null);
-	            em.merge(certificate);
-	        }
-	        
-	        // Remove the MedicalTraining entity
-	        em.remove(medicalTraining);
-	    }
-	    return medicalTraining;
+		MedicalTraining medicalTraining = em.find(MedicalTraining.class, id);
+		if (medicalTraining != null) {
+			// Remove associated MedicalCertificate if it exists
+			if (medicalTraining.getCertificate() != null) {
+				MedicalCertificate certificate = medicalTraining.getCertificate();
+				certificate.setMedicalTraining(null);
+				em.merge(certificate);
+			}
+
+			// Remove the MedicalTraining entity
+			em.remove(medicalTraining);
+		}
+		return medicalTraining;
 	}
-	
+
 	// Method to get all prescriptions
-    public List<Prescription> getAllPrescriptions() {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Prescription> cq = cb.createQuery(Prescription.class);
-        Root<Prescription> prescriptionRoot = cq.from(Prescription.class);
-        cq.select(prescriptionRoot);  // Select all records from Prescription entity
-        TypedQuery<Prescription> query = em.createQuery(cq);
-        return query.getResultList();  // Execute and return the result
-    }
-    
-    public List<MedicalCertificate> getAllMedicalCertificates() {
-        try {
-            // Create a CriteriaBuilder to build a query to retrieve all medical certificates
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<MedicalCertificate> cq = cb.createQuery(MedicalCertificate.class);
-            Root<MedicalCertificate> root = cq.from(MedicalCertificate.class);
+	public List<Prescription> getAllPrescriptions() {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Prescription> cq = cb.createQuery(Prescription.class);
+		Root<Prescription> prescriptionRoot = cq.from(Prescription.class);
+		cq.select(prescriptionRoot); // Select all records from Prescription entity
+		TypedQuery<Prescription> query = em.createQuery(cq);
+		return query.getResultList(); // Execute and return the result
+	}
 
-            // Select all MedicalCertificate records
-            cq.select(root);
+	public List<MedicalCertificate> getAllMedicalCertificates() {
+		try {
+			// Create a CriteriaBuilder to build a query to retrieve all medical
+			// certificates
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+			CriteriaQuery<MedicalCertificate> cq = cb.createQuery(MedicalCertificate.class);
+			Root<MedicalCertificate> root = cq.from(MedicalCertificate.class);
 
-            // Execute the query and return the result list
-            return em.createQuery(cq).getResultList();
-        } catch (Exception e) {
-            LOG.error("Error retrieving all medical certificates", e);
-            return Collections.emptyList();
-        }
-    }
-    
-    
- // Add this method to your ACMEMedicalService class
-    public List<Medicine> getAllMedicines() {
-        try {
-            // Create the criteria builder and criteria query for Medicine class
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<Medicine> cq = cb.createQuery(Medicine.class);
-            Root<Medicine> root = cq.from(Medicine.class);  // Define the root entity (Medicine)
+			// Select all MedicalCertificate records
+			cq.select(root);
 
-            // Select all Medicine records
-            cq.select(root);
+			// Execute the query and return the result list
+			return em.createQuery(cq).getResultList();
+		} catch (Exception e) {
+			LOG.error("Error retrieving all medical certificates", e);
+			return Collections.emptyList();
+		}
+	}
 
-            // Execute the query
-            TypedQuery<Medicine> query = em.createQuery(cq);
-            return query.getResultList();  // Return the list of Medicines
-        } catch (Exception e) {
-            // Log and handle exceptions (optional)
-            LOG.error("Error retrieving all medicines", e);
-            return Collections.emptyList();  // Return an empty list in case of failure
-        }
-    }
+	// Add this method to your ACMEMedicalService class
+	public List<Medicine> getAllMedicines() {
+		try {
+			// Create the criteria builder and criteria query for Medicine class
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+			CriteriaQuery<Medicine> cq = cb.createQuery(Medicine.class);
+			Root<Medicine> root = cq.from(Medicine.class); // Define the root entity (Medicine)
+
+			// Select all Medicine records
+			cq.select(root);
+
+			// Execute the query
+			TypedQuery<Medicine> query = em.createQuery(cq);
+			return query.getResultList(); // Return the list of Medicines
+		} catch (Exception e) {
+			// Log and handle exceptions (optional)
+			LOG.error("Error retrieving all medicines", e);
+			return Collections.emptyList(); // Return an empty list in case of failure
+		}
+	}
 
 }
