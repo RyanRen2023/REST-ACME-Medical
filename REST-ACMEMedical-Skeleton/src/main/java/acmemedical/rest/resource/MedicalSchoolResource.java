@@ -86,7 +86,7 @@ public class MedicalSchoolResource {
         MedicalSchool medicalSchool = service.deleteMedicalSchool(msId);
         Response response;
         if(medicalSchool != null) {
-        	response = Response.ok(medicalSchool).build();
+			response = Response.ok().entity("entity was deleted:" + msId).build();
         }else {
         	response = Response.status(Status.OK).entity("No School found").build();
         }        	

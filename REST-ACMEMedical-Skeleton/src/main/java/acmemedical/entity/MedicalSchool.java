@@ -28,10 +28,16 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import acmemedical.rest.serializer.MedicalTrainingSerializer;
 
 /**
  * The persistent class for the medical_school database table.
@@ -46,10 +52,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @NamedQuery(name = MedicalSchool.SPECIFIC_MEDICAL_SCHOOL_QUERY_NAME, query = "SELECT ms FROM MedicalSchool ms where ms.id = :param1")
 @NamedQuery(name = MedicalSchool.IS_DUPLICATE_QUERY_NAME, query = "SELECT COUNT(ms) FROM MedicalSchool ms WHERE ms.name = :param1")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "entity-type")
-@JsonSubTypes({ 
-	@Type(value = PrivateSchool.class, name = "private_school"),
-	@Type(value = PublicSchool.class, name = "public_school") 
-})
+@JsonSubTypes({ @Type(value = PrivateSchool.class, name = "private_school"),
+		@Type(value = PublicSchool.class, name = "public_school") })
+//@JsonSerialize(using = MedicalSchoolSerializer.class)
 public abstract class MedicalSchool extends PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -60,9 +65,9 @@ public abstract class MedicalSchool extends PojoBase implements Serializable {
 
 	@Column(name = "name")
 	private String name;
-//	@JsonManagedReference(value = "training-school")
-	@JsonBackReference(value="training-school")
-	@OneToMany(mappedBy = "school", fetch = FetchType.LAZY, orphanRemoval = true)	
+
+//	@JsonBackReference(value = "training-school")
+	@OneToMany(mappedBy = "school", fetch = FetchType.LAZY, orphanRemoval = true)
 	private Set<MedicalTraining> medicalTrainings = new HashSet<>();
 
 //	@Column(name = "public")  // This column is used for the discriminator
@@ -81,7 +86,8 @@ public abstract class MedicalSchool extends PojoBase implements Serializable {
 		super();
 		this.name = name;
 	}
-
+    @JsonInclude(Include.NON_NULL)
+	@JsonSerialize(using = MedicalTrainingSerializer.class)
 	public Set<MedicalTraining> getMedicalTrainings() {
 		return medicalTrainings;
 	}

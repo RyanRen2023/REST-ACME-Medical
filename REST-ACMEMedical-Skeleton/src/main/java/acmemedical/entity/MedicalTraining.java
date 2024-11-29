@@ -37,7 +37,7 @@ public class MedicalTraining extends PojoBase implements Serializable {
 	// TODOo MT03 - Add annotations for M:1. What should be the cascade and fetch
 	// types?
 //	@JsonBackReference(value="training-school")
-	@JsonManagedReference(value = "training-school")
+//	@JsonManagedReference(value = "training-school")
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "school_id")
 	private MedicalSchool school;
