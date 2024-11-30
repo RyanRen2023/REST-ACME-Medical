@@ -7,32 +7,7 @@
  */
 package acmemedical.ejb;
 
-import static acmemedical.utility.MyConstants.DEFAULT_KEY_SIZE;
-import static acmemedical.utility.MyConstants.DEFAULT_PROPERTY_ALGORITHM;
-import static acmemedical.utility.MyConstants.DEFAULT_PROPERTY_ITERATIONS;
-import static acmemedical.utility.MyConstants.DEFAULT_SALT_SIZE;
-import static acmemedical.utility.MyConstants.DEFAULT_USER_PASSWORD;
-import static acmemedical.utility.MyConstants.DEFAULT_USER_PREFIX;
-import static acmemedical.utility.MyConstants.PARAM1;
-import static acmemedical.utility.MyConstants.PROPERTY_ALGORITHM;
-import static acmemedical.utility.MyConstants.PROPERTY_ITERATIONS;
-import static acmemedical.utility.MyConstants.PROPERTY_KEY_SIZE;
-import static acmemedical.utility.MyConstants.PROPERTY_SALT_SIZE;
-import static acmemedical.utility.MyConstants.PU_NAME;
-import static acmemedical.utility.MyConstants.USER_ROLE;
-import static acmemedical.entity.Physician.ALL_PHYSICIANS_QUERY_NAME;
-import static acmemedical.entity.MedicalSchool.ALL_MEDICAL_SCHOOLS_QUERY_NAME;
-import static acmemedical.entity.MedicalSchool.IS_DUPLICATE_QUERY_NAME;
-import static acmemedical.entity.MedicalSchool.SPECIFIC_MEDICAL_SCHOOL_QUERY_NAME;
-
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import acmemedical.entity.*;
 import jakarta.ejb.Singleton;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -44,20 +19,14 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import jakarta.transaction.Transactional;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import acmemedical.entity.MedicalTraining;
-import acmemedical.entity.Patient;
-import acmemedical.entity.MedicalCertificate;
-import acmemedical.entity.Medicine;
-import acmemedical.entity.Prescription;
-import acmemedical.entity.PrescriptionPK;
-import acmemedical.entity.SecurityRole;
-import acmemedical.entity.SecurityUser;
-import acmemedical.entity.Physician;
-import acmemedical.entity.MedicalSchool;
+import java.io.Serializable;
+import java.util.*;
+
+import static acmemedical.entity.MedicalSchool.IS_DUPLICATE_QUERY_NAME;
+import static acmemedical.utility.MyConstants.*;
 
 @SuppressWarnings("unused")
 
@@ -96,8 +65,10 @@ public class ACMEMedicalService implements Serializable {
 	@Transactional
 	public void buildUserForNewPhysician(Physician newPhysician) {
 		SecurityUser userForNewPhysician = new SecurityUser();
-		userForNewPhysician.setUsername(
-				DEFAULT_USER_PREFIX + "_" + newPhysician.getFirstName() + "." + newPhysician.getLastName());
+		String uniqueUsername = generateUniqueUsername(newPhysician.getFirstName(), newPhysician.getLastName());
+//		userForNewPhysician.setUsername(
+//				DEFAULT_USER_PREFIX + "_" + newPhysician.getFirstName() + "." + newPhysician.getLastName());
+		userForNewPhysician.setUsername(uniqueUsername);
 		Map<String, String> pbAndjProperties = new HashMap<>();
 		pbAndjProperties.put(PROPERTY_ALGORITHM, DEFAULT_PROPERTY_ALGORITHM);
 		pbAndjProperties.put(PROPERTY_ITERATIONS, DEFAULT_PROPERTY_ITERATIONS);
@@ -115,7 +86,23 @@ public class ACMEMedicalService implements Serializable {
 		userRole.getUsers().add(userForNewPhysician);
 		em.persist(userForNewPhysician);
 	}
+	private String generateUniqueUsername(String firstName, String lastName) {
+		String baseUsername = DEFAULT_USER_PREFIX + "_" + firstName + "." + lastName;
+		String username = baseUsername;
+		int count = 1;
+		while (isUsernameDuplicate(username)) {
+			username = baseUsername + count;
+			count++;
+		}
+		return username;
+	}
 
+	private boolean isUsernameDuplicate(String username) {
+		TypedQuery<Long> query = em.createQuery("SELECT COUNT(u) FROM SecurityUser u WHERE u.username = :username", Long.class);
+		query.setParameter("username", username);
+		long count = query.getSingleResult();
+		return count > 0;
+	}
 	@Transactional
 	public Medicine setMedicineForPhysicianPatient(int physicianId, int patientId, Medicine newMedicine) {
 		Physician physicianToBeUpdated = em.find(Physician.class, physicianId);
@@ -538,4 +525,17 @@ public class ACMEMedicalService implements Serializable {
 		}
 	}
 
+	public void deleteMedicalCertificatesForPatient(int patientId) {
+		// 先查找相关的医疗证书
+		List<MedicalCertificate> certificates = em.createQuery(
+						"SELECT mc FROM MedicalCertificate mc WHERE mc.owner.id = :patientId",
+						MedicalCertificate.class)
+				.setParameter("patientId", patientId)
+				.getResultList();
+
+		// 删除找到的医疗证书
+		for (MedicalCertificate cert : certificates) {
+			em.remove(cert);
+		}
+	}
 }
