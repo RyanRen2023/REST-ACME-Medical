@@ -103,7 +103,7 @@ public class PhysicianResource {
         Physician newPhysicianWithIdTimestamps = service.persistPhysician(newPhysician);
         // Build a SecurityUser linked to the new physician
         service.buildUserForNewPhysician(newPhysicianWithIdTimestamps);
-        response = Response.ok(newPhysicianWithIdTimestamps).build();
+        response = Response.status(Status.CREATED).entity(newPhysicianWithIdTimestamps).build();
         return response;
     }
 
@@ -127,7 +127,7 @@ public class PhysicianResource {
 
         if (sc.isCallerInRole(ADMIN_ROLE)) {
             service.deletePhysicianById(id);
-            response = Response.status(Status.OK).build();
+            response = Response.status(Status.OK).entity("Physician was successfully deleted:"+ id).build();
         } else {
             response = Response.status(Status.BAD_REQUEST).build();
         }

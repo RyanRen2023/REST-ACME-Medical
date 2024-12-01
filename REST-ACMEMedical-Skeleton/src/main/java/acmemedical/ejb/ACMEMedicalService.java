@@ -466,6 +466,7 @@ public class ACMEMedicalService implements Serializable {
 	public Patient deletePatientById(int id) {
 		Patient existingPatient = getPatientById(id);
 		if (existingPatient != null) {
+//			existingPatient.getPrescriptions().clear();
 			em.remove(existingPatient);
 		}
 		return existingPatient;

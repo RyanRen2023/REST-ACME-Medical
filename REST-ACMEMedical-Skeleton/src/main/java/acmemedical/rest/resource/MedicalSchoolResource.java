@@ -93,22 +93,16 @@ public class MedicalSchoolResource {
         return response;
     }
     
-    // Please try to understand and test the below methods:
+
+    
+ // Please try to understand and test the below methods:
     @RolesAllowed({ADMIN_ROLE})
     @POST
-    public Response addMedicalSchool(MedicalSchoolDTO newMedicalSchoolDTO) {
-    	MedicalSchool medicalSchool = null;
-    	if(newMedicalSchoolDTO.getEntityType().equals("private_school")) {
-    		medicalSchool = new PrivateSchool(newMedicalSchoolDTO.getName());
-    		
-    	}else if(newMedicalSchoolDTO.getEntityType().equals("public_school")) {
-    		medicalSchool = new PublicSchool(newMedicalSchoolDTO.getName());
-    	}else {
-    	    return Response.status(Status.BAD_REQUEST).entity("Invalid entity type").build();
-    	}
+    public Response addMedicalSchool(MedicalSchool newMedicalSchool) {
+        MedicalSchool medicalSchool = newMedicalSchool;
         LOG.debug("Adding a new medical school = {}", medicalSchool);
         MedicalSchool tempMedicalSchool = service.persistMedicalSchool(medicalSchool);
-        return Response.ok(tempMedicalSchool).build();
+        return Response.status(Status.CREATED).entity(tempMedicalSchool).build();
     }
 
     @RolesAllowed({ADMIN_ROLE})

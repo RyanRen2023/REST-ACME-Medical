@@ -66,8 +66,7 @@ public abstract class MedicalSchool extends PojoBase implements Serializable {
 	@Column(name = "name")
 	private String name;
 
-//	@JsonBackReference(value = "training-school")
-	@OneToMany(mappedBy = "school", fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToMany(mappedBy = "school", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private Set<MedicalTraining> medicalTrainings = new HashSet<>();
 
 //	@Column(name = "public")  // This column is used for the discriminator

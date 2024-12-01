@@ -77,7 +77,7 @@ public class Medicine extends PojoBase implements Serializable {
 	// Hint - @OneToMany option cascade can be added to define if changes to this entity should cascade to objects.
 	// Hint - @OneToMany option cascade will be ignored if not added, meaning no cascade effect.
 	// Hint - @OneToMany option fetch should be lazy to prevent eagerly initializing all the data.
-	@OneToMany(cascade=CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "medicine")
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "medicine")
 	// Hint - java.util.Set is used as a collection, however List could have been used as well.
 	// Hint - java.util.Set will be unique and also possibly can provide better get performance with HashCode.
 	@JsonManagedReference(value="medicine-prescriptions")

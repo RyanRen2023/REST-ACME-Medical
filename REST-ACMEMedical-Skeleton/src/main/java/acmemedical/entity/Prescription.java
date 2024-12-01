@@ -43,21 +43,21 @@ public class Prescription extends PojoBaseCompositeKey<PrescriptionPK> implement
 
 	// @MapsId is used to map a part of composite key to an entity.
 	@MapsId("physicianId")
-    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "physician_id", referencedColumnName = "id", nullable = false)
 	@JsonBackReference(value="physician-prescriptions")
 	private Physician physician;
 
 	//TODOo PR01 - Add missing annotations.  Similar to physician, this field is a part of the composite key of this entity.  What should be the cascade and fetch types?  Reference to a patient is not optional.
 	@MapsId("patientId")
-	@ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "patient_id", referencedColumnName = "patient_id", nullable = false)
 	@JsonBackReference(value="patient-prescriptions")
 	private Patient patient;
 
 
 	//TODOo PR02 - Add missing annotations.  What should be the cascade and fetch types?
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "medicine_id", referencedColumnName = "medicine_id", nullable = true)
 	@JsonBackReference(value="medicine-prescriptions")
 	private Medicine medicine;

@@ -38,13 +38,13 @@ public class MedicalCertificate extends PojoBase implements Serializable {
 
 	// TODOo MC01 - Add missing annotations. Bidirectional mapping to
 	// MedicalTraining
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "training_id", referencedColumnName = "training_id")
 	@JsonBackReference("training-certificate")
 	private MedicalTraining medicalTraining;
 
 	// TODOo MC02 - Add missing annotations. Reference to Physician entity, required
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "physician_id", nullable = false)
 	@JsonBackReference(value="physician-certificate")
 	private Physician owner;

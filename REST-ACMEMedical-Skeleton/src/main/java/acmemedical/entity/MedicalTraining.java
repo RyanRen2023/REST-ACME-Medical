@@ -38,7 +38,7 @@ public class MedicalTraining extends PojoBase implements Serializable {
 	// types?
 //	@JsonBackReference(value="training-school")
 //	@JsonManagedReference(value = "training-school")
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
+	@ManyToOne(optional=false,fetch = FetchType.LAZY)
 	@JoinColumn(name = "school_id")
 	private MedicalSchool school;
 
@@ -51,7 +51,7 @@ public class MedicalTraining extends PojoBase implements Serializable {
 	// @OneToOne(cascade=CascadeType.MERGE, fetch = FetchType.LAZY, optional = true)
 	// @JoinColumn(name = "certificate_id", referencedColumnName = "certificate_id",
 	// nullable = true)
-	@OneToOne(mappedBy = "medicalTraining", fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "medicalTraining",cascade= CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonManagedReference("training-certificate")
 	private MedicalCertificate certificate;
 

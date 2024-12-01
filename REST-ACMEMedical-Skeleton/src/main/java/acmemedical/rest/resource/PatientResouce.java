@@ -9,6 +9,7 @@ import jakarta.security.enterprise.SecurityContext;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -87,9 +88,9 @@ public class PatientResouce {
 	        LOG.debug("Deleting patient with id = {}", patientId);
 	        Patient patient = service.deletePatientById(patientId);  // Assuming this service method exists
 	        if (patient == null) {
-	            return Response.status(Response.Status.NOT_FOUND).entity("Patient not found").build();
+	            return Response.status(Status.NOT_FOUND).entity("Patient not found").build();
 	        }
-	        return Response.status(Response.Status.NO_CONTENT).build();
+	        return Response.status(Status.OK).entity("Patient was deleted successfully!").build();
 	    }
 
 }

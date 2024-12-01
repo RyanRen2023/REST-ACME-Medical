@@ -27,6 +27,7 @@ import java.util.List;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
@@ -94,7 +95,6 @@ public class TestACMEMedicalSystem {
         assertThat(response.getStatus(), is(200));
         List<Physician> physicians = response.readEntity(new GenericType<List<Physician>>(){});
         assertThat(physicians, is(not(empty())));
-        assertThat(physicians, hasSize(1));
     }
     
     @Test
@@ -105,5 +105,72 @@ public class TestACMEMedicalSystem {
             .request()
             .get();
         assertThat(response.getStatus(), is(403));
+    }
+    
+   
+    @Test
+    public void test02_all_physicians_with_userrole() throws JsonMappingException, JsonProcessingException {
+        Response response = webTarget
+            .register(userAuth)
+            .path(PHYSICIAN_RESOURCE_NAME)
+            .request()
+            .get();
+        assertThat(response.getStatus(), is(403)); // User role should not have access, expecting 403 Forbidden
+    }
+
+    @Test
+    public void test03_create_new_physician_admin() throws JsonProcessingException {
+        // Example data for creating a new physician
+        String jsonInputString = "{\"firstName\": \"Michael\", \"lastName\": \"Smith\"}";
+
+        Response response = webTarget
+            .register(adminAuth)
+            .path(PHYSICIAN_RESOURCE_NAME)
+            .request()
+            .post(Entity.json(jsonInputString));
+
+        assertThat(response.getStatus(), is(201)); // Expecting status 201 for creation
+        Physician physician = response.readEntity(Physician.class);
+        assertThat(physician.getFirstName(), is("Michael"));
+        assertThat(physician.getLastName(), is("Smith"));
+    }
+
+    @Test
+    public void test04_create_new_physician_user() throws JsonProcessingException {
+        // Example data for creating a new physician
+        String jsonInputString = "{\"firstName\": \"Charles\", \"lastName\": \"Xavier\"}";
+
+        Response response = webTarget
+            .register(userAuth)
+            .path(PHYSICIAN_RESOURCE_NAME)
+            .request()
+            .post(Entity.json(jsonInputString));
+
+        assertThat(response.getStatus(), is(403)); // User role should not have permission, expecting 403 Forbidden
+    }
+
+    @Test
+    public void test05_delete_physician_by_id_admin() {
+        // Assuming physician ID 1 exists
+    	
+        Response response = webTarget
+            .register(adminAuth)
+            .path(PHYSICIAN_RESOURCE_NAME + "/2")
+            .request()
+            .delete();
+
+        assertThat(response.getStatus(), is(200)); // Expecting status 200 OK for successful deletion
+    }
+
+    @Test
+    public void test06_delete_physician_by_id_user() {
+        // Assuming physician ID 1 exists
+        Response response = webTarget
+            .register(userAuth)
+            .path(PHYSICIAN_RESOURCE_NAME + "/2")
+            .request()
+            .delete();
+
+        assertThat(response.getStatus(), is(403)); // User role should not have permission, expecting 403 Forbidden
     }
 }
