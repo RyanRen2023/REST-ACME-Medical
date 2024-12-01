@@ -97,6 +97,7 @@ public interface MyConstants {
     public static final String SCHOOL_TYPE_PUBLIC = "public";
     public static final String SCHOOL_TYPE_PRIVATE = "private";
     public static final String SCHOOL_TYPE = "schoolType";
+    public static final String ENTITY_TYPE = "entityType";
 
     public static final String  FIELD_ID        = "id";
     public static final String  FIELD_NAME      = "name";

@@ -44,7 +44,7 @@ public class ConfigureJacksonObjectMapper implements ContextResolver<ObjectMappe
         TypeResolverBuilder<?> typer = new StdTypeResolverBuilder()
                 .init(JsonTypeInfo.Id.NAME, null)
                 .inclusion(JsonTypeInfo.As.PROPERTY)
-                .typeProperty("entity-type");
+                .typeProperty("entityType");
         mapper.setDefaultTyping(typer);
         mapper.registerSubtypes(new NamedType(PublicMedicalSchool.class, "public_medical_school"));
         mapper.registerSubtypes(new NamedType(PrivateMedicalSchool.class, "private_medical_school"));

@@ -87,7 +87,7 @@ public class MedicalSchoolResource {
                 gen.writeStringField(FIELD_CREATED, school.getCreated().toString());
                 gen.writeStringField(FIELD_UPDATED, school.getUpdated().toString());
                 String schoolType = (school instanceof PublicSchool) ? SCHOOL_TYPE_PUBLIC : SCHOOL_TYPE_PRIVATE;
-                gen.writeStringField(SCHOOL_TYPE, schoolType);
+                gen.writeStringField(ENTITY_TYPE, schoolType);
                 gen.writeNumberField(FIELD_MEDICAL_TRAININGS_COUNT,
                         school.getMedicalTrainings() != null ? school.getMedicalTrainings().size() : 0);
                 gen.writeEndObject();

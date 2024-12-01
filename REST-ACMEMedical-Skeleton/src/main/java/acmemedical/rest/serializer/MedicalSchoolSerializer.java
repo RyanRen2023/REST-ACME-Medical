@@ -31,9 +31,9 @@ public class MedicalSchoolSerializer extends StdSerializer<MedicalSchool> implem
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 		gen.writeStartObject();
 		if (school instanceof PrivateSchool) {
-			gen.writeStringField("entity-type", "private_school");
+			gen.writeStringField("entityType", "private_school");
 		} else if (school instanceof PublicSchool){
-			gen.writeStringField("entity-type", "public_school");
+			gen.writeStringField("entityType", "public_school");
 		}
 		gen.writeNumberField("id", school.getId());
 		gen.writeNumberField("version", school.getVersion());

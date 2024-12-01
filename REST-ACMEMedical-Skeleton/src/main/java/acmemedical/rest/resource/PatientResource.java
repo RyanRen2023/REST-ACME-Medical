@@ -21,7 +21,7 @@ import java.util.List;
 @Path(MyConstants.PATIENT_RESOURCE_NAME)  // API endpoint for patients
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class PatientResouce {
+public class PatientResource {
 	
 	 private static final Logger LOG = LogManager.getLogger();
 
@@ -84,12 +84,23 @@ public class PatientResouce {
 	    @Path("/{patientId}")
 	    @RolesAllowed({ADMIN_ROLE})
 	    public Response deletePatient(@PathParam("patientId") int patientId) {
-	        LOG.debug("Deleting patient with id = {}", patientId);
-	        Patient patient = service.deletePatientById(patientId);  // Assuming this service method exists
-	        if (patient == null) {
-	            return Response.status(Response.Status.NOT_FOUND).entity("Patient not found").build();
-	        }
-	        return Response.status(Response.Status.NO_CONTENT).build();
-	    }
+			LOG.debug("Deleting patient with id = {}", patientId);
+			try {
+				// First delete all prescriptions associated with the patient
+				service.deletePatientPrescriptions(patientId);
+
+				// Then delete the patient
+				Patient patient = service.deletePatientById(patientId);
+				if (patient == null) {
+					return Response.status(Response.Status.NOT_FOUND)
+							.entity("Patient not found").build();
+				}
+				return Response.status(Response.Status.NO_CONTENT).build();
+			} catch (Exception e) {
+				LOG.error("Error deleting patient: ", e);
+				return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+						.entity("Unable to delete patient due to existing references").build();
+			}
+		}
 
 }
