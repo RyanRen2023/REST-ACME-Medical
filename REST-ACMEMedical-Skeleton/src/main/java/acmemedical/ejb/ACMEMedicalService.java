@@ -10,10 +10,7 @@ package acmemedical.ejb;
 import acmemedical.entity.*;
 import jakarta.ejb.Singleton;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -525,17 +522,10 @@ public class ACMEMedicalService implements Serializable {
 		}
 	}
 
-	public void deleteMedicalCertificatesForPatient(int patientId) {
-		// 先查找相关的医疗证书
-		List<MedicalCertificate> certificates = em.createQuery(
-						"SELECT mc FROM MedicalCertificate mc WHERE mc.owner.id = :patientId",
-						MedicalCertificate.class)
-				.setParameter("patientId", patientId)
-				.getResultList();
-
-		// 删除找到的医疗证书
-		for (MedicalCertificate cert : certificates) {
-			em.remove(cert);
-		}
+	public void deletePatientPrescriptions(int patientId) {
+		Query query = em.createQuery(
+				"DELETE FROM Prescription p WHERE p.patient.id = :patientId");
+		query.setParameter("patientId", patientId);
+		query.executeUpdate();
 	}
 }

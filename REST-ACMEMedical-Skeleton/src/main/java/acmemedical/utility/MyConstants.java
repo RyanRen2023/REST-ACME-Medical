@@ -7,6 +7,8 @@
  */
 package acmemedical.utility;
 
+import acmemedical.entity.PublicSchool;
+
 /**
  * <p>
  * This class holds various constants used by this app's artifacts
@@ -91,5 +93,16 @@ public interface MyConstants {
     //JPA constants
     public static final String PU_NAME = "acmemedical-PU";
     public static final String PARAM1 = "param1";
+
+    public static final String SCHOOL_TYPE_PUBLIC = "public";
+    public static final String SCHOOL_TYPE_PRIVATE = "private";
+    public static final String SCHOOL_TYPE = "schoolType";
+
+    public static final String  FIELD_ID        = "id";
+    public static final String  FIELD_NAME      = "name";
+    public static final String  FIELD_VERSION   = "version";
+    public static final String  FIELD_CREATED   = "created";
+    public static final String  FIELD_UPDATED   = "updated";
+    public static final String  FIELD_MEDICAL_TRAININGS_COUNT = "medicalTrainingsCount";
 
 }

@@ -7,8 +7,17 @@
  */
 package acmemedical.rest.resource;
 
+import java.io.IOException;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.inject.Inject;
@@ -23,10 +32,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import static acmemedical.utility.MyConstants.ADMIN_ROLE;
-import static acmemedical.utility.MyConstants.USER_ROLE;
 import jakarta.ws.rs.core.Response.Status;
-import static acmemedical.utility.MyConstants.MEDICAL_SCHOOL_RESOURCE_NAME;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,6 +43,8 @@ import acmemedical.entity.PrivateSchool;
 import acmemedical.entity.PublicSchool;
 import acmemedical.entity.MedicalSchool;
 import acmemedical.entity.MedicalSchoolDTO;
+
+import static acmemedical.utility.MyConstants.*;
 
 @Path(MEDICAL_SCHOOL_RESOURCE_NAME)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -54,11 +62,45 @@ public class MedicalSchoolResource {
     @GET
     @RolesAllowed({ADMIN_ROLE, USER_ROLE})
     public Response getMedicalSchools() {
-        LOG.debug("Retrieving all medical schools...");
+       /* LOG.debug("Retrieving all medical schools...");
         List<MedicalSchool> medicalSchools = service.getAllMedicalSchools();
         LOG.debug("Medical schools found = {}", medicalSchools);
         Response response = Response.ok(medicalSchools).build();
-        return response;
+        return response;*/
+
+        LOG.debug("Retrieving all medical schools...");
+        List<MedicalSchool> medicalSchools = service.getAllMedicalSchools();
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(MedicalSchool.class, new JsonSerializer<MedicalSchool>() {
+            @Override
+            public void serialize(MedicalSchool school, JsonGenerator gen, SerializerProvider provider)
+                    throws IOException {
+                gen.writeStartObject();
+                gen.writeNumberField(FIELD_ID, school.getId());
+                gen.writeStringField(FIELD_NAME, school.getName());
+                gen.writeNumberField(FIELD_VERSION, school.getVersion());
+                gen.writeStringField(FIELD_CREATED, school.getCreated().toString());
+                gen.writeStringField(FIELD_UPDATED, school.getUpdated().toString());
+                String schoolType = (school instanceof PublicSchool) ? SCHOOL_TYPE_PUBLIC : SCHOOL_TYPE_PRIVATE;
+                gen.writeStringField(SCHOOL_TYPE, schoolType);
+                gen.writeNumberField(FIELD_MEDICAL_TRAININGS_COUNT,
+                        school.getMedicalTrainings() != null ? school.getMedicalTrainings().size() : 0);
+                gen.writeEndObject();
+            }
+        });
+        mapper.registerModule(module);
+        try {
+            String jsonString = mapper.writeValueAsString(medicalSchools);
+            return Response.ok(jsonString, MediaType.APPLICATION_JSON).build();
+        } catch (JsonProcessingException e) {
+            LOG.error("Error converting to JSON", e);
+            return Response.serverError().build();
+        }
     }
     
     @GET
