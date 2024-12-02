@@ -5,6 +5,12 @@
  * @author Shariar (Shawn) Emami
  * @author (original) Mike Norman
  *
+ * @author Shaoxian Duan
+ * @author Xihai Ren
+ * @author Yaozhou Xie
+ * @author Huacong Xie
+ * @modified_date 2024-12-02
+ *
  */
 package acmemedical.rest.resource;
 

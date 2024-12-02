@@ -3,6 +3,13 @@
  * Course Materials CST 8277
  * @author Teddy Yap
  * @author Mike Norman
+ *
+ *
+ * @author Shaoxian Duan
+ * @author Xihai Ren
+ * @author Yaozhou Xie
+ * @author Huacong Xie
+ * @modified_date 2024-12-02
  * 
  * Note:  Students do NOT need to change anything in this class.
  *

@@ -4,6 +4,12 @@
  * @author Teddy Yap
  * @author Shariar (Shawn) Emami
  *
+ * @author Shaoxian Duan
+ * @author Xihai Ren
+ * @author Yaozhou Xie
+ * @author Huacong Xie
+ * @modified_date 2024-12-02
+ *
  */
 package acmemedical.ejb;
 
@@ -27,9 +33,6 @@ import static acmemedical.utility.MyConstants.*;
 
 @SuppressWarnings("unused")
 
-/**
- * Stateless Singleton EJB Bean - ACMEMedicalService
- */
 @Singleton
 public class ACMEMedicalService implements Serializable {
 	private static final long serialVersionUID = 1L;

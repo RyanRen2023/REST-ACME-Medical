@@ -1,3 +1,14 @@
+/********************************************************************************************************
+ * File:  PatientResource.java Course Materials CST 8277
+ *
+ * @author Shaoxian Duan
+ * @author Xihai Ren
+ * @author Yaozhou Xie
+ * @author Huacong Xie
+ * @modified_date 2024-12-02
+ *
+ */
+
 package acmemedical.rest.resource;
 import acmemedical.ejb.ACMEMedicalService;
 import acmemedical.entity.Patient;

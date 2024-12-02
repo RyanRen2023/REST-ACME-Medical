@@ -1,3 +1,13 @@
+/********************************************************************************************************
+ * File:  PrescriptionResource.java Course Materials CST 8277
+ *
+ * @author Shaoxian Duan
+ * @author Xihai Ren
+ * @author Yaozhou Xie
+ * @author Huacong Xie
+ * @modified_date 2024-12-02
+ *
+ */
 package acmemedical.rest.resource;
 
 import acmemedical.ejb.ACMEMedicalService;
@@ -20,6 +30,9 @@ import static acmemedical.utility.MyConstants.USER_ROLE;
 
 import java.util.List;
 
+/***
+ *
+ */
 @Path(MyConstants.PRESCRIPTION_RESOURCE_NAME)  // API endpoint for prescriptions
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
