@@ -97,13 +97,15 @@ class MedicalTrainingResourceTest {
 	void tearDown() throws Exception {
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Test
 	public void test01_all_medicaltraning_with_adminrole() throws JsonMappingException, JsonProcessingException {
 		Response response = webTarget
 				// .register(userAuth)
 				.register(adminAuth).path(MEDICAL_TRAINING_RESOURCE_NAME).request().get();
 		assertThat(response.getStatus(), is(200));
-	
+		List<MedicalTraining> medicalTrainings = response.readEntity(new GenericType<List<MedicalTraining>>(){});
+		assertThat(medicalTrainings,is(not(empty())));
 	}
 
 	@Test

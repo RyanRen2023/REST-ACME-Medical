@@ -109,8 +109,8 @@ public class MedicineResource {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
 
-            service.deleteMedicineById(medicineId);
-            return Response.status(Response.Status.NO_CONTENT).build();
+            medicine = service.deleteMedicineById(medicineId);
+            return Response.status(Response.Status.OK).entity("Medicine "+medicine.getDrugName() + " was sccessfully deleted").build();
         } catch (Exception e) {
             LOG.error("Error deleting medicine with id = {}", medicineId, e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

@@ -19,7 +19,7 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class DurationAndStatus implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	// TODOo DS02 - Add annotations
 	@Column(name = "start_date", nullable = false)
 	private LocalDateTime startDate;
@@ -33,6 +33,7 @@ public class DurationAndStatus implements Serializable {
 	private byte active;
 
 	public DurationAndStatus() {
+		super();
 	}
 
 	public LocalDateTime getStartDate() {

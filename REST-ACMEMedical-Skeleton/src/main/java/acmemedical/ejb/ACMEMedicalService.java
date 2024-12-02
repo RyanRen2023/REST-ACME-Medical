@@ -357,11 +357,12 @@ public class ACMEMedicalService implements Serializable {
 	}
 
 	@Transactional
-	public void deleteMedicineById(int id) {
+	public Medicine deleteMedicineById(int id) {
 		Medicine medicine = getMedicineById(id);
 		if (medicine != null) {
 			em.remove(medicine);
 		}
+		return medicine;
 	}
 
 	@Transactional
