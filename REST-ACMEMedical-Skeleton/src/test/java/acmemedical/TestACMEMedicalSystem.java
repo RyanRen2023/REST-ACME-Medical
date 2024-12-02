@@ -190,9 +190,6 @@ public class TestACMEMedicalSystem {
         Client client = ClientBuilder.newClient().register(MyObjectMapperProvider.class).register(new LoggingFeature());
         webTarget = client.target(uri);
     }
-    private Medicine getMedicines(List<Medicine> medicines) {
-        return medicines.get(0);
-    }
 
 
     private void getMedicalSchoolList(List<Map<String, Object>> medicalSchools) {
