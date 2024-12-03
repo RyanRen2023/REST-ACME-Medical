@@ -718,6 +718,8 @@ public class TestACMEMedicalSystem {
 
     }
 
+
+    // Users can retrieve a specific MedicalSchool by ID
     @Test
     public void test30_get_medicalschool_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
         int id = dataMedicalSchool().getId();
@@ -757,6 +759,7 @@ public class TestACMEMedicalSystem {
         assertThat(medicalSchoolMap.get("name"), is("Harvard Medical School"));
     }
 
+    // Only admin can create a MedicalSchool - negative test case
     @Test
     public void test32_create_medicalschool_with_userrole() throws JsonMappingException, JsonProcessingException {
         MedicalSchoolDTO newMedicalSchoolDTO = new MedicalSchoolDTO();
@@ -987,6 +990,7 @@ public class TestACMEMedicalSystem {
     }
 
     //status=403, reason="Forbidden"; only adminAuth can delete
+    // Only admin can delete a MedicalSchool - negative test case
     @Test
     public void test47_delete_medicalschool_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
         int id = dataMedicalSchool().getId();
