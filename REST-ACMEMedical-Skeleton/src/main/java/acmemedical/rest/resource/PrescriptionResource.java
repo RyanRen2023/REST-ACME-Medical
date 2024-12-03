@@ -56,9 +56,9 @@ public class PrescriptionResource {
         return Response.ok(prescriptions).build();
     }
 
-    // Get a prescription by ID
+    // Get a prescription by foreignKey IDs
     @GET
-    @Path("/{prescriptionId}")
+    @Path("/{physicianId}/{patientId}")
     @RolesAllowed({ADMIN_ROLE, USER_ROLE})
     public Response getPrescriptionById(@PathParam("physicianId") int physicianId, @PathParam("patientId") int patientId) {
     	PrescriptionPK prescriptionId = new PrescriptionPK(physicianId,patientId);
