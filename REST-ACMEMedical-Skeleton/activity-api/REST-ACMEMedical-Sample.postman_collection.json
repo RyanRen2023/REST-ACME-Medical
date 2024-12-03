@@ -1748,7 +1748,6 @@
 			},
 			"response": []
 		},
-
 		{
 			"name": "Create New Medical Training",
 			"request": {
@@ -1847,7 +1846,6 @@
 			},
 			"response": []
 		},
-
 		{
 			"name": "GET All Medical Certificate(admin)",
 			"request": {
@@ -2192,7 +2190,6 @@
 			},
 			"response": []
 		}
-
 
 	]
 }
