@@ -1073,44 +1073,6 @@
 			"response": []
 		},
 		{
-			"name": "DELETE Medicine By ID (admin)",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "admin",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicine/3",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"rest-acmemedical",
-						"api",
-						"v1",
-						"medicine",
-						"3"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "DELETE Medicine By ID (user)",
 			"request": {
 				"auth": {
@@ -1372,7 +1334,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"entity-type\": \"private_school\",\r\n    \"name\": \"Harvard Medical School\"\r\n}",
+					"raw": "{\r\n    \"entityType\": \"public_school\",\r\n    \"name\": \"Harvard Medical School\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1751,149 +1713,6 @@
 			"response": []
 		},
 		{
-			"name": "POST New Medical Training(admin)",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"schoolId\": 2,\n  \"startDate\": \"2024-11-29T16:15:55\",\n  \"endDate\": \"2024-11-29T16:15:55\",\n  \"active\": true,\n  \"created\": \"2024-11-29T16:15:55\",\n  \"updated\": \"2024-11-29T16:15:55\",\n  \"version\": 1\n}"
-				},
-				"url": {
-					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicaltraining",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"rest-acmemedical",
-						"api",
-						"v1",
-						"medicaltraining"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update Medical Training By ID(admin)",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"schoolId\": 2,\n  \"startDate\": \"2024-11-30T12:00:00\",\n  \"endDate\": \"2024-11-30T15:00:00\",\n  \"active\": false,\n  \"created\": \"2024-11-29T16:15:55\",\n  \"updated\": \"2024-11-30T12:00:00\",\n  \"version\": 2\n}"
-				},
-				"url": {
-					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicaltraining/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"rest-acmemedical",
-						"api",
-						"v1",
-						"medicaltraining",
-						"1"
-					],
-					"variable": [
-						{
-							"key": "medicalTrainingId",
-							"value": "1"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Medical Training By ID(admin)",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicaltraining/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"rest-acmemedical",
-						"api",
-						"v1",
-						"medicaltraining",
-						"1"
-					],
-					"variable": [
-						{
-							"key": "medicalTrainingId",
-							"value": "1"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "GET All Medical Certificate(admin)",
 			"request": {
 				"auth": {
@@ -1980,7 +1799,7 @@
 			"response": []
 		},
 		{
-			"name": "GET Medical Medicalcertificate By ID(admin)",
+			"name": "GET Medical Certificate By ID(admin)",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -2023,7 +1842,7 @@
 			"response": []
 		},
 		{
-			"name": "GET Medical Medicalcertificate By ID(user)",
+			"name": "GET Medical Certificate By ID(user)",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -2060,6 +1879,59 @@
 						"api",
 						"v1",
 						"medicalcertificate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE Medical Certificate By ID (admin)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"created\": \"2024-11-01T23:01:23.1857308\",\r\n    \"updated\": \"2024-12-02T23:01:23.1857308\",\r\n    \"signed\": \"false\"  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicalcertificate/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest-acmemedical",
+						"api",
+						"v1",
+						"medicalcertificate",
+						"1"
 					]
 				}
 			},
@@ -2232,6 +2104,59 @@
 						"api",
 						"v1",
 						"prescription"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE Medical Certificate By ID (admin)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"created\": \"2024-11-01T23:01:23.1857308\",\r\n    \"updated\": \"2024-12-02T23:01:23.1857308\",\r\n    \"signed\": \"false\"  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicalcertificate/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest-acmemedical",
+						"api",
+						"v1",
+						"medicalcertificate",
+						"1"
 					]
 				}
 			},

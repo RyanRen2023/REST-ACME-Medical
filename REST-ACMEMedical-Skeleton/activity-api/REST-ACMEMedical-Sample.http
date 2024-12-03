@@ -224,11 +224,6 @@ Content-Type: application/json
 }
 
 ###
-# @name DELETE Medicine By ID (admin)
-DELETE http://localhost:8080/rest-acmemedical/api/v1/medicine/3
-Authorization: Basic admin admin
-
-###
 # @name DELETE Medicine By ID (user)
 DELETE http://localhost:8080/rest-acmemedical/api/v1/medicine/3
 Authorization: Basic cst8277 8277
@@ -271,7 +266,7 @@ Authorization: Basic cst8288 8288
 Content-Type: application/json
 
 {
-  "entity-type": "private_school",
+  "entityType": "public_school",
   "name": "Harvard Medical School"
 }
 
@@ -336,43 +331,6 @@ Authorization: Basic cst8277 8277
 Content-Type: application/json
 
 ###
-# @name POST New Medical Training(admin)
-POST http://localhost:8080/rest-acmemedical/api/v1/medicaltraining
-Authorization: Basic admin admin
-Content-Type: application/json
-
-{
-  "schoolId": 2,
-  "startDate": "2024-11-29T16:15:55",
-  "endDate": "2024-11-29T16:15:55",
-  "active": true,
-  "created": "2024-11-29T16:15:55",
-  "updated": "2024-11-29T16:15:55",
-  "version": 1
-}
-
-###
-# @name Update Medical Training By ID(admin)
-PUT http://localhost:8080/rest-acmemedical/api/v1/medicaltraining/1
-Authorization: Basic admin admin
-Content-Type: application/json
-
-{
-  "schoolId": 2,
-  "startDate": "2024-11-30T12:00:00",
-  "endDate": "2024-11-30T15:00:00",
-  "active": false,
-  "created": "2024-11-29T16:15:55",
-  "updated": "2024-11-30T12:00:00",
-  "version": 2
-}
-
-###
-# @name Delete Medical Training By ID(admin)
-DELETE http://localhost:8080/rest-acmemedical/api/v1/medicaltraining/1
-Authorization: Basic admin admin
-
-###
 # @name GET All Medical Certificate(admin)
 GET http://localhost:8080/rest-acmemedical/api/v1/medicalcertificate
 Authorization: Basic admin admin
@@ -385,16 +343,29 @@ Authorization: Basic cst8277 8277
 Content-Type: application/json
 
 ###
-# @name GET Medical Medicalcertificate By ID(admin)
+# @name GET Medical Certificate By ID(admin)
 GET http://localhost:8080/rest-acmemedical/api/v1/medicalcertificate
 Authorization: Basic cst8277 8277
 Content-Type: application/json
 
 ###
-# @name GET Medical Medicalcertificate By ID(user)
+# @name GET Medical Certificate By ID(user)
 GET http://localhost:8080/rest-acmemedical/api/v1/medicalcertificate
 Authorization: Basic cst8277 8277
 Content-Type: application/json
+
+###
+# @name UPDATE Medical Certificate By ID (admin)
+PUT http://localhost:8080/rest-acmemedical/api/v1/medicalcertificate/1
+Authorization: Basic admin admin
+Content-Type: application/json
+
+{
+  "id": 1,
+  "created": "2024-11-01T23:01:23.1857308",
+  "updated": "2024-12-02T23:01:23.1857308",
+  "signed": "false"
+}
 
 ###
 # @name GET All Prescription(admin)
@@ -419,3 +390,16 @@ Content-Type: application/json
 GET http://localhost:8080/rest-acmemedical/api/v1/prescription
 Authorization: Basic cst8277 8277
 Content-Type: application/json
+
+###
+# @name UPDATE Medical Certificate By ID (admin)
+PUT http://localhost:8080/rest-acmemedical/api/v1/medicalcertificate/1
+Authorization: Basic admin admin
+Content-Type: application/json
+
+{
+  "id": 1,
+  "created": "2024-11-01T23:01:23.1857308",
+  "updated": "2024-12-02T23:01:23.1857308",
+  "signed": "false"
+}
