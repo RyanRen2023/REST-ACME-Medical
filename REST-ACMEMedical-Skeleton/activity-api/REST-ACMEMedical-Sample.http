@@ -43,14 +43,40 @@ Content-Type: application/json
 }
 
 ###
-# @name DELETE Physician By ID (admin)
-DELETE http://localhost:8080/rest-acmemedical/api/v1/physician/2
+# @name UPDATE Physician (admin)
+PUT http://localhost:8080/rest-acmemedical/api/v1/physician/1/patient/1/medicine
 Authorization: Basic admin admin
+Content-Type: application/json
+
+{
+  "drugName": "Aspirin",
+  "manufacturerName": "Bayer",
+  "dosageInformation": "Take 1 tablet daily",
+  "chemicalName": "Xaxxvier",
+  "genericName": "ttt",
+  "prescriptions": [],
+  "version": 1,
+  "created": "2024-11-01T23:01:23.1857308",
+  "updated": "2024-12-01T23:01:23.1857308"
+}
 
 ###
-# @name DELETE Physician By ID (user)
-DELETE http://localhost:8080/rest-acmemedical/api/v1/physician/2
-Authorization: Basic cst8288 8288
+# @name UPDATE Physician (user)
+PUT http://localhost:8080/rest-acmemedical/api/v1/physician/1/patient/1/medicine
+Authorization: Basic cst8277 8277
+Content-Type: application/json
+
+{
+  "drugName": "Aspirin",
+  "manufacturerName": "Bayer",
+  "dosageInformation": "Take 1 tablet daily",
+  "chemicalName": "Xaxxvier",
+  "genericName": "ttt",
+  "prescriptions": [],
+  "version": 1,
+  "created": "2024-11-01T23:01:23.1857308",
+  "updated": "2024-12-01T23:01:23.1857308"
+}
 
 ###
 # @name GET All Patients (admin)
@@ -138,16 +164,6 @@ Content-Type: application/json
 }
 
 ###
-# @name DELETE Patient By ID (admin)
-DELETE http://localhost:8080/rest-acmemedical/api/v1/patient/3
-Authorization: Basic admin admin
-
-###
-# @name DELETE Patient By ID (user)
-DELETE http://localhost:8080/rest-acmemedical/api/v1/patient/3
-Authorization: Basic cst8277 8277
-
-###
 # @name GET All Medicines (admin)
 GET http://localhost:8080/rest-acmemedical/api/v1/medicine
 Authorization: Basic admin admin
@@ -224,11 +240,6 @@ Content-Type: application/json
 }
 
 ###
-# @name DELETE Medicine By ID (user)
-DELETE http://localhost:8080/rest-acmemedical/api/v1/medicine/3
-Authorization: Basic cst8277 8277
-
-###
 # @name GET All Medical Schools (admin)
 GET http://localhost:8080/rest-acmemedical/api/v1/medicalschool
 Authorization: Basic admin admin
@@ -262,23 +273,13 @@ Content-Type: application/json
 ###
 # @name POST New Medical School (user)
 POST http://localhost:8080/rest-acmemedical/api/v1/medicalschool
-Authorization: Basic cst8288 8288
+Authorization: Basic cst8277 8277
 Content-Type: application/json
 
 {
   "entityType": "public_school",
   "name": "Harvard Medical School"
 }
-
-###
-# @name DELETE Medical School By ID (admin)
-DELETE http://localhost:8080/rest-acmemedical/api/v1/medicalschool/3
-Authorization: Basic admin admin
-
-###
-# @name DELETE Medical School By ID (user)
-DELETE http://localhost:8080/rest-acmemedical/api/v1/medicalschool/2
-Authorization: Basic cst8288 8288
 
 ###
 # @name UPDATE  Medical School By ID (admin)
@@ -321,7 +322,7 @@ Content-Type: application/json
 ###
 # @name GET Medical Training By ID(admin)
 GET http://localhost:8080/rest-acmemedical/api/v1/medicaltraining
-Authorization: Basic cst8277 8277
+Authorization: Basic admin admin
 Content-Type: application/json
 
 ###
@@ -345,12 +346,12 @@ Content-Type: application/json
 ###
 # @name GET Medical Certificate By ID(admin)
 GET http://localhost:8080/rest-acmemedical/api/v1/medicalcertificate
-Authorization: Basic cst8277 8277
+Authorization: Basic admin admin
 Content-Type: application/json
 
 ###
 # @name GET Medical Certificate By ID(user)
-GET http://localhost:8080/rest-acmemedical/api/v1/medicalcertificate
+GET http://localhost:8080/rest-acmemedical/api/v1/medicalcertificate/1
 Authorization: Basic cst8277 8277
 Content-Type: application/json
 
@@ -358,6 +359,19 @@ Content-Type: application/json
 # @name UPDATE Medical Certificate By ID (admin)
 PUT http://localhost:8080/rest-acmemedical/api/v1/medicalcertificate/1
 Authorization: Basic admin admin
+Content-Type: application/json
+
+{
+  "id": 1,
+  "created": "2024-11-01T23:01:23.1857308",
+  "updated": "2024-12-02T23:01:23.1857308",
+  "signed": "false"
+}
+
+###
+# @name UPDATE Medical Certificate By ID (user)
+PUT http://localhost:8080/rest-acmemedical/api/v1/medicalcertificate/1
+Authorization: Basic cst8277 8277
 Content-Type: application/json
 
 {
@@ -381,25 +395,62 @@ Content-Type: application/json
 
 ###
 # @name GET Prescription By ID(admin)
-GET http://localhost:8080/rest-acmemedical/api/v1/prescription
-Authorization: Basic cst8277 8277
+GET http://localhost:8080/rest-acmemedical/api/v1/prescription/1/2
+Authorization: Basic admin admin
 Content-Type: application/json
 
 ###
 # @name GET Prescription By ID(user)
-GET http://localhost:8080/rest-acmemedical/api/v1/prescription
+GET http://localhost:8080/rest-acmemedical/api/v1/prescription/1/2
 Authorization: Basic cst8277 8277
 Content-Type: application/json
 
 ###
-# @name UPDATE Medical Certificate By ID (admin)
-PUT http://localhost:8080/rest-acmemedical/api/v1/medicalcertificate/1
+# @name DELETE Physician By ID (admin)
+DELETE http://localhost:8080/rest-acmemedical/api/v1/physician/2
 Authorization: Basic admin admin
-Content-Type: application/json
 
-{
-  "id": 1,
-  "created": "2024-11-01T23:01:23.1857308",
-  "updated": "2024-12-02T23:01:23.1857308",
-  "signed": "false"
-}
+###
+# @name DELETE Physician By ID (user)
+DELETE http://localhost:8080/rest-acmemedical/api/v1/physician/2
+Authorization: Basic cst8277 8277
+
+###
+# @name DELETE Patient By ID (admin)
+DELETE http://localhost:8080/rest-acmemedical/api/v1/patient/3
+Authorization: Basic admin admin
+
+###
+# @name DELETE Patient By ID (user)
+DELETE http://localhost:8080/rest-acmemedical/api/v1/patient/3
+Authorization: Basic cst8277 8277
+
+###
+# @name DELETE Medicine By ID (user)
+DELETE http://localhost:8080/rest-acmemedical/api/v1/medicine/3
+Authorization: Basic cst8277 8277
+
+###
+# @name DELETE Medical School By ID (admin)
+DELETE http://localhost:8080/rest-acmemedical/api/v1/medicalschool/3
+Authorization: Basic admin admin
+
+###
+# @name DELETE Medical School By ID (user)
+DELETE http://localhost:8080/rest-acmemedical/api/v1/medicalschool/2
+Authorization: Basic cst8277 8277
+
+###
+# @name DELETE Medical Training By ID (user)
+DELETE http://localhost:8080/rest-acmemedical/api/v1/medicaltraining/2
+Authorization: Basic cst8277 8277
+
+###
+# @name GET All Physicians (cst8288 not existed id)
+GET http://localhost:8080/rest-acmemedical/api/v1/physician
+Authorization: Basic cst8288 cst8288
+
+###
+# @name GET All Medical School (cst8288 not existed id)
+GET http://localhost:8080/rest-acmemedical/api/v1/medicalschool
+Authorization: Basic cst8288 cst8288

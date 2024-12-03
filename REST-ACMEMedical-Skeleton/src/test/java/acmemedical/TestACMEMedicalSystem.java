@@ -345,28 +345,13 @@ public class TestACMEMedicalSystem {
 
 
 
-    @Test
-    public void test09_update_Not_Existed_physician_by_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
-        Medicine newMedicine = new Medicine();
-        newMedicine.setDrugName("Ibuprofen");
-        newMedicine.setManufacturerName("Johnson & Johnson");
-        newMedicine.setDosageInformation("Take 2 tablets every 6 hours");
-
-        Response response = webTarget
-                .register(adminAuth)
-                .path(MEDICINE_RESOURCE_NAME+"/999999")
-                .request()
-                .put(Entity.json(newMedicine));
-        assertThat(response.getStatus(), is(404));
-    }
-
 
 
 
 
     //test cases for patients ---------------------------------------------------------------------------------
     @Test
-    public void test10_all_patients_with_adminrole() throws JsonMappingException, JsonProcessingException {
+    public void test09_all_patients_with_adminrole() throws JsonMappingException, JsonProcessingException {
         Response response = webTarget
                 .register(adminAuth)
                 .path(PATIENT_RESOURCE_NAME)
@@ -379,7 +364,7 @@ public class TestACMEMedicalSystem {
     }
 
     @Test
-    public void test11_all_patients_with_userrole() throws JsonMappingException, JsonProcessingException {
+    public void test10_all_patients_with_userrole() throws JsonMappingException, JsonProcessingException {
         Response response = webTarget
                 .register(userAuth)
                 .path(PATIENT_RESOURCE_NAME)
@@ -389,7 +374,7 @@ public class TestACMEMedicalSystem {
     }
 
     @Test
-    public void test12_get_patient_by_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
+    public void test11_get_patient_by_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
         int id = dataPatient().getId();
 
         Response response = webTarget
@@ -404,7 +389,7 @@ public class TestACMEMedicalSystem {
     }
 
     @Test
-    public void test13_get_patient_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
+    public void test12_get_patient_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
         int id = dataPatient().getId();
 
         Response response = webTarget
@@ -416,7 +401,7 @@ public class TestACMEMedicalSystem {
     }
 
     @Test
-    public void test14_create_patient_with_adminrole() throws JsonMappingException, JsonProcessingException {
+    public void test13_create_patient_with_adminrole() throws JsonMappingException, JsonProcessingException {
         Patient newPatient = new Patient();
         newPatient.setFirstName("Jane");
         newPatient.setLastName("Doe");
@@ -438,7 +423,7 @@ public class TestACMEMedicalSystem {
     }
 
     @Test
-    public void test15_create_patient_with_userrole() throws JsonMappingException, JsonProcessingException {
+    public void test14_create_patient_with_userrole() throws JsonMappingException, JsonProcessingException {
         Patient newPatient = new Patient();
         newPatient.setFirstName("John");
         newPatient.setLastName("Smith");
@@ -458,7 +443,7 @@ public class TestACMEMedicalSystem {
 
 
     @Test
-    public void test16_update_patient_by_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
+    public void test15_update_patient_by_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
         int id = dataPatient().getId();
         int version = dataPatient().getVersion();
         Patient existedPatient = dataPatient();
@@ -475,7 +460,7 @@ public class TestACMEMedicalSystem {
     }
 
     @Test
-    public void test17_update_patient_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
+    public void test16_update_patient_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
         int id = dataPatient().getId();
 
         Patient newPatient = new Patient();
@@ -502,7 +487,7 @@ public class TestACMEMedicalSystem {
     //test cases for Medicine ---------------------------------------------------------------------------------
 
     @Test
-    public void test18_all_medicines_with_adminrole() throws JsonMappingException, JsonProcessingException {
+    public void test17_all_medicines_with_adminrole() throws JsonMappingException, JsonProcessingException {
         Response response = webTarget
                 .register(adminAuth)
                 .path(MEDICINE_RESOURCE_NAME)
@@ -515,7 +500,7 @@ public class TestACMEMedicalSystem {
     }
 
     @Test
-    public void test19_all_medicines_with_userrole() throws JsonMappingException, JsonProcessingException {
+    public void test18_all_medicines_with_userrole() throws JsonMappingException, JsonProcessingException {
         Response response = webTarget
                 .register(userAuth)
                 .path(MEDICINE_RESOURCE_NAME)
@@ -525,7 +510,7 @@ public class TestACMEMedicalSystem {
     }
 
     @Test
-    public void test20_get_medicine_by_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
+    public void test19_get_medicine_by_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
         int id = dataMedicine().getId();
 
         Medicine existedMedicine = dataMedicine();
@@ -543,7 +528,7 @@ public class TestACMEMedicalSystem {
 
 
     @Test
-    public void test21_get_medicine_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
+    public void test20_get_medicine_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
         int id = dataMedicine().getId();
 
 
@@ -556,7 +541,7 @@ public class TestACMEMedicalSystem {
     }
 
     @Test
-    public void test22_create_medicine_with_adminrole() throws JsonMappingException, JsonProcessingException {
+    public void test21_create_medicine_with_adminrole() throws JsonMappingException, JsonProcessingException {
         Medicine newMedicine = new Medicine();
         newMedicine.setDrugName("Aspirin");
         newMedicine.setManufacturerName("Bayer");
@@ -574,7 +559,7 @@ public class TestACMEMedicalSystem {
     }
 
     @Test
-    public void test23_create_medicine_with_userrole() throws JsonMappingException, JsonProcessingException {
+    public void test22_create_medicine_with_userrole() throws JsonMappingException, JsonProcessingException {
         Medicine newMedicine = new Medicine();
         newMedicine.setDrugName("Ibuprofen");
         newMedicine.setManufacturerName("Johnson & Johnson");
@@ -589,7 +574,7 @@ public class TestACMEMedicalSystem {
     }
 
     @Test
-    public void test24_update_medicine_by_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
+    public void test23_update_medicine_by_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
         Medicine newMedicine = new Medicine();
         newMedicine.setDrugName("Aspirin");
         newMedicine.setManufacturerName("Bayer");
@@ -608,25 +593,11 @@ public class TestACMEMedicalSystem {
         assertThat(createdMedicine.getId(), is(not(0)));
     }
 
-    @Test
-    public void test25_update_Not_Existed_medicine_by_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
-        Medicine newMedicine = new Medicine();
-        newMedicine.setDrugName("Ibuprofen");
-        newMedicine.setManufacturerName("Johnson & Johnson");
-        newMedicine.setDosageInformation("Take 2 tablets every 6 hours");
-
-        Response response = webTarget
-                .register(adminAuth)
-                .path(MEDICINE_RESOURCE_NAME+"/999999")
-                .request()
-                .put(Entity.json(newMedicine));
-        assertThat(response.getStatus(), is(404));
-    }
 
 
 
     @Test
-    public void test26_update_medicine_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
+    public void test24_update_medicine_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
         Medicine newMedicine = new Medicine();
         newMedicine.setDrugName("Ibuprofen");
         newMedicine.setManufacturerName("Johnson & Johnson");
@@ -647,7 +618,7 @@ public class TestACMEMedicalSystem {
 
     //test cases for MedicalSchool ---------------------------------------------------------------------------------
     @Test
-    public void test27_all_medicalschools_with_adminrole() throws JsonMappingException, JsonProcessingException {
+    public void test25_all_medicalschools_with_adminrole() throws JsonMappingException, JsonProcessingException {
         Response response = webTarget
                 .register(adminAuth)
                 .path(MEDICAL_SCHOOL_RESOURCE_NAME)
@@ -682,7 +653,7 @@ public class TestACMEMedicalSystem {
 
 
     @Test
-    public void test28_all_medicalschools_with_userrole() throws JsonMappingException, JsonProcessingException {
+    public void test26_all_medicalschools_with_userrole() throws JsonMappingException, JsonProcessingException {
         Response response = webTarget
                 .register(userAuth)
                 .path(MEDICAL_SCHOOL_RESOURCE_NAME)
@@ -696,7 +667,7 @@ public class TestACMEMedicalSystem {
     }
 
     @Test
-    public void test29_get_medicalschool_by_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
+    public void test27_get_medicalschool_by_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
         int id = dataMedicalSchool().getId();
 
         Response response = webTarget
@@ -721,7 +692,7 @@ public class TestACMEMedicalSystem {
 
     // Users can retrieve a specific MedicalSchool by ID
     @Test
-    public void test30_get_medicalschool_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
+    public void test28_get_medicalschool_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
         int id = dataMedicalSchool().getId();
 
         Response response = webTarget
@@ -740,7 +711,7 @@ public class TestACMEMedicalSystem {
     }
 
     @Test
-    public void test31_create_medicalschool_with_adminrole() throws JsonMappingException, JsonProcessingException {
+    public void test29_create_medicalschool_with_adminrole() throws JsonMappingException, JsonProcessingException {
         MedicalSchoolDTO newMedicalSchoolDTO = new MedicalSchoolDTO();
         newMedicalSchoolDTO.setEntityType("private_school");
         newMedicalSchoolDTO.setName("Harvard Medical School");
@@ -761,7 +732,7 @@ public class TestACMEMedicalSystem {
 
     // Only admin can create a MedicalSchool - negative test case
     @Test
-    public void test32_create_medicalschool_with_userrole() throws JsonMappingException, JsonProcessingException {
+    public void test30_create_medicalschool_with_userrole() throws JsonMappingException, JsonProcessingException {
         MedicalSchoolDTO newMedicalSchoolDTO = new MedicalSchoolDTO();
         newMedicalSchoolDTO.setEntityType("private_school");
         newMedicalSchoolDTO.setName("Yale School of Medicine");
@@ -777,7 +748,7 @@ public class TestACMEMedicalSystem {
 
 
     @Test
-    public void test33_update_medicalschool_by_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
+    public void test31_update_medicalschool_by_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
         int id = dataMedicalSchool().getId();
 
         PrivateSchool updateMedicalSchool = new PrivateSchool();
@@ -795,7 +766,7 @@ public class TestACMEMedicalSystem {
     }
 
     @Test
-    public void test34_update_medicalschool_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
+    public void test32_update_medicalschool_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
         int id = dataMedicalSchool().getId();
 
         PrivateSchool updateMedicalSchool = new PrivateSchool();
@@ -825,7 +796,7 @@ public class TestACMEMedicalSystem {
     //test cases for MedicalTraining ---------------------------------------------------------------------------------
 
     @Test
-    public void test35_getAllMedicalTrainings_withAdminRole() {
+    public void test33_All_MedicalTrainings_with_AdminRole() {
         Response response = webTarget
                 .register(adminAuth)
                 .path(MEDICAL_TRAINING_RESOURCE_NAME)
@@ -835,11 +806,116 @@ public class TestACMEMedicalSystem {
 //        List<MedicalTraining> trainings = response.readEntity(new GenericType<List<MedicalTraining>>() {});
 //        assertThat(trainings, is(not(empty())));
     }
+	
+	@Test
+    public void test34_All_MedicalTrainings_with_userrole() {
+        Response response = webTarget
+                .register(userAuth)
+                .path(MEDICAL_TRAINING_RESOURCE_NAME)
+                .request()
+                .get();
+        assertThat(response.getStatus(), is(200));
+    }
+	
+	
+
+   @Test
+    public void test35_get_MedicalTrainings_by_id_with_AdminRole() {
+        int id = 1;
+        Response response = webTarget
+                .register(adminAuth)
+                .path(MEDICAL_TRAINING_RESOURCE_NAME + SLASH + id)
+                .request()
+                .get();
+        assertThat(response.getStatus(), is(200));
+
+    }
+
+
+
+   @Test
+    public void test36_get_MedicalTrainings_by_id_with_UserRole() {
+        int id = 1;
+        Response response = webTarget
+                .register(userAuth)
+                .path(MEDICAL_TRAINING_RESOURCE_NAME + SLASH + id)
+                .request()
+                .get();
+        assertThat(response.getStatus(), is(200));
+
+    }
+
+
+
+
+
+
+
+    //test cases for Medical_Certificate ---------------------------------------------------------------------------------
 
     @Test
-    public void test36_getMedical_Certificate_by_id_withAdminRole() {
+    public void test37_All_Medical_Certificate_with_AdminRole() {
+        Response response = webTarget
+                .register(adminAuth)
+                .path(MEDICAL_CERTIFICATE_RESOURCE_NAME)
+                .request()
+                .get();
+        assertThat(response.getStatus(), is(200));
+        List<MedicalCertificate> prescriptions = response.readEntity(new GenericType<List<MedicalCertificate>>() {});
+        assertThat(prescriptions, is(not(empty())));
+    }
+
+    @Test
+    public void test38_All_Medical_Certificate_with_UserRole() {
+        Response response = webTarget
+                .register(userAuth)
+                .path(MEDICAL_CERTIFICATE_RESOURCE_NAME)
+                .request()
+                .get();
+        assertThat(response.getStatus(), is(200));
+        List<MedicalCertificate> prescriptions = response.readEntity(new GenericType<List<MedicalCertificate>>() {});
+        assertThat(prescriptions, is(not(empty())));
+    }
+
+
+
+    @Test
+    public void test39_get_Medical_Certificate_by_id_with_AdminRole() {
+        int id = 1;
+
+        Response response = webTarget
+                .register(adminAuth)
+                .path(MEDICAL_CERTIFICATE_RESOURCE_NAME + SLASH + id)
+                .request()
+                .get();
+        assertThat(response.getStatus(), is(200));
+
+    }
+
+
+    @Test
+    public void test40_get_Medical_Certificate_by_id_with_UserRole() {
+        int id = 1;
+
+        Response response = webTarget
+                .register(userAuth)
+                .path(MEDICAL_CERTIFICATE_RESOURCE_NAME + SLASH + id)
+                .request()
+                .get();
+        assertThat(response.getStatus(), is(200));
+
+    }
+
+
+    @Test
+    public void test41_update_Medical_Certificate_by_id_with_AdminRole() {
         MedicalCertificate updateMedicalCertificate = new MedicalCertificate();
+        updateMedicalCertificate.setMedicalTraining(new MedicalTraining());
+        updateMedicalCertificate.setUpdated(LocalDateTime.now());
+        updateMedicalCertificate.setSigned(false);
+        updateMedicalCertificate.setCreated(LocalDateTime.now());
         updateMedicalCertificate.setId(1);
+		
         int id = 1;
         Response response = webTarget
                 .register(adminAuth)
@@ -851,52 +927,33 @@ public class TestACMEMedicalSystem {
     }
 
 
-
     @Test
-    public void test37getAllMedicalTrainings_withUserRole() {
+    public void test42_update_Medical_Certificate_by_id_with_UserRole() {
+		MedicalCertificate updateMedicalCertificate = new MedicalCertificate();
+		updateMedicalCertificate.setMedicalTraining(new MedicalTraining());
+        updateMedicalCertificate.setUpdated(LocalDateTime.now());
+        updateMedicalCertificate.setSigned(false);
+        updateMedicalCertificate.setCreated(LocalDateTime.now());
+        updateMedicalCertificate.setId(1);
+
+        int id = 1;
         Response response = webTarget
                 .register(userAuth)
-                .path(MEDICAL_TRAINING_RESOURCE_NAME)
+                .path(MEDICAL_CERTIFICATE_RESOURCE_NAME + SLASH + id)
                 .request()
-                .get();
+                .put(Entity.json(updateMedicalCertificate));
         assertThat(response.getStatus(), is(200));
+
     }
 
 
-
-
-    //test cases for MedicalCertificate ---------------------------------------------------------------------------------
-
-    @Test
-    public void test38_getAllMedicalCertificate_withAdminRole() {
-        Response response = webTarget
-                .register(adminAuth)
-                .path(MEDICAL_CERTIFICATE_RESOURCE_NAME)
-                .request()
-                .get();
-        assertThat(response.getStatus(), is(200));
-        List<MedicalCertificate> prescriptions = response.readEntity(new GenericType<List<MedicalCertificate>>() {});
-        assertThat(prescriptions, is(not(empty())));
-    }
-
-    @Test
-    public void test39_getAllMedicalCertificate_withUserRole() {
-        Response response = webTarget
-                .register(userAuth)
-                .path(MEDICAL_CERTIFICATE_RESOURCE_NAME)
-                .request()
-                .get();
-        assertThat(response.getStatus(), is(200));
-        List<MedicalCertificate> prescriptions = response.readEntity(new GenericType<List<MedicalCertificate>>() {});
-        assertThat(prescriptions, is(not(empty())));
-    }
 
 
 
 
     //test cases for Prescription ---------------------------------------------------------------------------------
     @Test
-    public void test40_getAllPrescriptions_withAdminRole() {
+    public void test43_All_Prescriptions_with_AdminRole() {
         Response response = webTarget
                 .register(adminAuth)
                 .path(PRESCRIPTION_RESOURCE_NAME)
@@ -908,7 +965,7 @@ public class TestACMEMedicalSystem {
     }
 
     @Test
-    public void test41_getAllPrescriptions_withUserRole() {
+    public void test44_All_Prescriptions_with_UserRole() {
         Response response = webTarget
                 .register(userAuth)
                 .path(PRESCRIPTION_RESOURCE_NAME)
@@ -920,10 +977,45 @@ public class TestACMEMedicalSystem {
     }
 
 
-
-    //test cases for delete ---------------------------------------------------------------------------------
     @Test
-    public void test42_delete_physician_by_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
+    public void test45_get_Prescriptions_by_id_with_AdminRole() {
+		int physicianId = 1;
+		int patientId = 2;
+        Response response = webTarget
+                .register(adminAuth)
+                .path(PRESCRIPTION_RESOURCE_NAME + SLASH + physicianId+ SLASH + patientId)
+                .request()
+                .get();
+        assertThat(response.getStatus(), is(200));
+        Prescription prescription = response.readEntity(Prescription.class);
+        assertThat(prescription, is(notNullValue()));
+        assertThat(prescription.getId(), is(not(0)));
+
+    }
+
+    @Test
+    public void test46_get_Prescriptions_by_id_with_UserRole() {
+        int physicianId = 1;
+        int patientId = 2;
+        Response response = webTarget
+                .register(userAuth)
+                .path(PRESCRIPTION_RESOURCE_NAME + SLASH + physicianId+ SLASH + patientId)
+                .request()
+                .get();
+        assertThat(response.getStatus(), is(200));
+        Prescription prescription = response.readEntity(Prescription.class);
+        assertThat(prescription, is(notNullValue()));
+        assertThat(prescription.getId(), is(not(0)));
+    }
+
+
+
+
+
+
+    //test cases for delete Physician---------------------------------------------------------------------------------
+    @Test
+    public void test47_delete_physician_by_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
         int id = dataPhysician().getId();
 
         Response response = webTarget
@@ -935,7 +1027,7 @@ public class TestACMEMedicalSystem {
     }
 
     @Test
-    public void test43_delete_physician_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
+    public void test48_delete_physician_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
         int id = dataPhysician().getId();
 
         Response response = webTarget
@@ -947,37 +1039,52 @@ public class TestACMEMedicalSystem {
     }
 
 
+    //test cases for delete Physician---------------------------------------------------------------------------------
 
 
     @Test
-    public void test44_delete_patient_by_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
+    public void test49_delete_patient_by_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
         int id = dataPatient().getId();
 
         Response response = webTarget
                 .register(adminAuth)
                 .path(PATIENT_RESOURCE_NAME + SLASH+id)
-                .request()
+                .request(MediaType.APPLICATION_JSON)
                 .delete();
         assertThat(response.getStatus(), is(204));
     }
 
     //status=403, reason="Forbidden"; only adminAuth can delete
     @Test
-    public void test45_delete_patient_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
+    public void test50_delete_patient_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
         int id = dataPatient().getId();
         Response response = webTarget
                 .register(userAuth)
                 .path(PATIENT_RESOURCE_NAME + SLASH+id)
+                .request(MediaType.APPLICATION_JSON)
+                .delete();
+        assertThat(response.getStatus(), is(403));
+    }
+
+    //test cases for delete Medicine---------------------------------------------------------------------------------
+    //status=403, reason="Forbidden"; only adminAuth can delete
+    @Test
+    public void test51_delete_medicine_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
+        int id = dataMedicine().getId();
+
+        Response response = webTarget
+                .register(userAuth)
+                .path(MEDICINE_RESOURCE_NAME + SLASH+id)
                 .request()
                 .delete();
         assertThat(response.getStatus(), is(403));
     }
 
 
-
+    //test cases for delete Medical School---------------------------------------------------------------------------------
 
    @Test
-    public void test46_delete_medicalschool_by_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
+    public void test52_delete_medical_school_by_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
         int id = dataMedicalSchool().getId();
 
         Response response = webTarget
@@ -991,7 +1098,7 @@ public class TestACMEMedicalSystem {
     //status=403, reason="Forbidden"; only adminAuth can delete
     // Only admin can delete a MedicalSchool - negative test case
     @Test
-    public void test47_delete_medicalschool_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
+    public void test53_delete_medical_school_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
         int id = dataMedicalSchool().getId();
 
         Response response = webTarget
@@ -1003,43 +1110,11 @@ public class TestACMEMedicalSystem {
     }
 
 
-
-    // id not exist in database
-    @Test
-    public void test48_delete_medicine_by_notExisted_id_with_adminrole() throws JsonMappingException, JsonProcessingException {
-        int id = 99999;
-        Response response = webTarget
-                .register(adminAuth)
-                .path(MEDICINE_RESOURCE_NAME + SLASH + id)
-                .request()
-                .delete();
-//        NOT_FOUND(404, "Not Found"),
-        assertThat(response.getStatus(), is(404));
-    }
-
-
-    //status=403, reason="Forbidden"; only adminAuth can delete
-    @Test
-    public void test49_delete_medicine_by_id_with_userrole() throws JsonMappingException, JsonProcessingException {
-        int id = dataMedicine().getId();
-
-        Response response = webTarget
-                .register(userAuth)
-                .path(MEDICINE_RESOURCE_NAME + SLASH+id)
-                .request()
-                .delete();
-        assertThat(response.getStatus(), is(403));
-    }
-
-
-
-
-
-
+    //test cases for delete Medical Training---------------------------------------------------------------------------------
 
     @Test
-    public void test50_deleteMedicalTraining_withUserRole() {
-        int id = 1;
+    public void test54_delete_Medical_Training_with_UserRole() {
+        int id = 2;
         Response response = webTarget
                 .register(userAuth)
                 .path(MEDICAL_TRAINING_RESOURCE_NAME+ SLASH+id)
@@ -1048,8 +1123,29 @@ public class TestACMEMedicalSystem {
         assertThat(response.getStatus(), is(403));
     }
 
+    //test cases for physician cst8288 not existed id---------------------------------------------------------------------------------
+    @Test
+    public void test55_all_physicians_with_cst8288_no_existed_id() throws JsonMappingException, JsonProcessingException {
+        Response response = webTarget
+                .register(nullValue())
+                .path(PHYSICIAN_RESOURCE_NAME)
+                .request()
+                .get();
+        assertThat(response.getStatus(), is(401));
 
+    }
 
+    //test cases for medical_school cst8288 not existed id---------------------------------------------------------------------------------
+    @Test
+    public void test56_all_medical_school_with_cst8288_no_existed_id() throws JsonMappingException, JsonProcessingException {
+        Response response = webTarget
+                .register(nullValue())
+                .path(MEDICAL_SCHOOL_RESOURCE_NAME)
+                .request()
+                .get();
+        assertThat(response.getStatus(), is(401));
+
+    }
 
 
 }

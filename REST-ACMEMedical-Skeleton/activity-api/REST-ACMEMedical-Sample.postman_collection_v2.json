@@ -249,7 +249,7 @@
 			"response": []
 		},
 		{
-			"name": "DELETE Physician By ID (admin)",
+			"name": "UPDATE Physician (admin)",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -266,10 +266,19 @@
 						}
 					]
 				},
-				"method": "DELETE",
+				"method": "PUT",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n      \"drugName\":\"Aspirin\",\n    \"manufacturerName\": \"Bayer\",\n    \"dosageInformation\":\"Take 1 tablet daily\",\n    \"chemicalName\": \"Xaxxvier\",\n    \"genericName\":\"ttt\",\n    \"prescriptions\":[],\n    \"version\":1,\n    \"created\":\"2024-11-01T23:01:23.1857308\",\r\n    \"updated\":\"2024-12-01T23:01:23.1857308\"  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:8080/rest-acmemedical/api/v1/physician/2",
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/physician/1/patient/1/medicine",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -280,34 +289,46 @@
 						"api",
 						"v1",
 						"physician",
-						"2"
+						"1",
+						"patient",
+						"1",
+						"medicine"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "DELETE Physician By ID (user)",
+			"name": "UPDATE Physician (user)",
 			"request": {
 				"auth": {
 					"type": "basic",
 					"basic": [
 						{
 							"key": "password",
-							"value": "8288",
+							"value": "8277",
 							"type": "string"
 						},
 						{
 							"key": "username",
-							"value": "cst8288",
+							"value": "cst8277",
 							"type": "string"
 						}
 					]
 				},
-				"method": "DELETE",
+				"method": "PUT",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n      \"drugName\":\"Aspirin\",\n    \"manufacturerName\": \"Bayer\",\n    \"dosageInformation\":\"Take 1 tablet daily\",\n    \"chemicalName\": \"Xaxxvier\",\n    \"genericName\":\"ttt\",\n    \"prescriptions\":[],\n    \"version\":1,\n    \"created\":\"2024-11-01T23:01:23.1857308\",\r\n    \"updated\":\"2024-12-01T23:01:23.1857308\"  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:8080/rest-acmemedical/api/v1/physician/2",
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/physician/1/patient/1/medicine",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -318,7 +339,10 @@
 						"api",
 						"v1",
 						"physician",
-						"2"
+						"1",
+						"patient",
+						"1",
+						"medicine"
 					]
 				}
 			},
@@ -661,82 +685,6 @@
 			"response": []
 		},
 		{
-			"name": "DELETE Patient By ID (admin)",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "admin",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/rest-acmemedical/api/v1/patient/3",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"rest-acmemedical",
-						"api",
-						"v1",
-						"patient",
-						"3"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "DELETE Patient By ID (user)",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "8277",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "cst8277",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/rest-acmemedical/api/v1/patient/3",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"rest-acmemedical",
-						"api",
-						"v1",
-						"patient",
-						"3"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "GET All Medicines (admin)",
 			"request": {
 				"auth": {
@@ -1073,44 +1021,6 @@
 			"response": []
 		},
 		{
-			"name": "DELETE Medicine By ID (user)",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "8277",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "cst8277",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicine/3",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"rest-acmemedical",
-						"api",
-						"v1",
-						"medicine",
-						"3"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "GET All Medical Schools (admin)",
 			"request": {
 				"auth": {
@@ -1320,12 +1230,12 @@
 					"basic": [
 						{
 							"key": "password",
-							"value": "8288",
+							"value": "8277",
 							"type": "string"
 						},
 						{
 							"key": "username",
-							"value": "cst8288",
+							"value": "cst8277",
 							"type": "string"
 						}
 					]
@@ -1353,82 +1263,6 @@
 						"api",
 						"v1",
 						"medicalschool"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "DELETE Medical School By ID (admin)",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "admin",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicalschool/3",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"rest-acmemedical",
-						"api",
-						"v1",
-						"medicalschool",
-						"3"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "DELETE Medical School By ID (user)",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "8288",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "cst8288",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicalschool/2",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"rest-acmemedical",
-						"api",
-						"v1",
-						"medicalschool",
-						"2"
 					]
 				}
 			},
@@ -1634,12 +1468,12 @@
 					"basic": [
 						{
 							"key": "username",
-							"value": "cst8277",
+							"value": "admin",
 							"type": "string"
 						},
 						{
 							"key": "password",
-							"value": "8277",
+							"value": "admin",
 							"type": "string"
 						}
 					]
@@ -1806,12 +1640,12 @@
 					"basic": [
 						{
 							"key": "username",
-							"value": "cst8277",
+							"value": "admin",
 							"type": "string"
 						},
 						{
 							"key": "password",
-							"value": "8277",
+							"value": "admin",
 							"type": "string"
 						}
 					]
@@ -1868,7 +1702,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicalcertificate",
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicalcertificate/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1878,7 +1712,8 @@
 						"rest-acmemedical",
 						"api",
 						"v1",
-						"medicalcertificate"
+						"medicalcertificate",
+						"1"
 					]
 				}
 			},
@@ -1898,6 +1733,60 @@
 						{
 							"key": "username",
 							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"created\": \"2024-11-01T23:01:23.1857308\",\r\n    \"updated\": \"2024-12-02T23:01:23.1857308\",\r\n    \"signed\": \"false\"  \r\n}",
+
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicalcertificate/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest-acmemedical",
+						"api",
+						"v1",
+						"medicalcertificate",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE Medical Certificate By ID (user)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "cst8277",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "8277",
 							"type": "string"
 						}
 					]
@@ -2031,12 +1920,12 @@
 					"basic": [
 						{
 							"key": "username",
-							"value": "cst8277",
+							"value": "admin",
 							"type": "string"
 						},
 						{
 							"key": "password",
-							"value": "8277",
+							"value": "admin",
 							"type": "string"
 						}
 					]
@@ -2050,7 +1939,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/rest-acmemedical/api/v1/prescription",
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/prescription/1/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2060,7 +1949,9 @@
 						"rest-acmemedical",
 						"api",
 						"v1",
-						"prescription"
+						"prescription",
+						"1",
+						"2"
 					]
 				}
 			},
@@ -2093,7 +1984,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/rest-acmemedical/api/v1/prescription",
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/prescription/1/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2103,14 +1994,16 @@
 						"rest-acmemedical",
 						"api",
 						"v1",
-						"prescription"
+						"prescription",
+						"1",
+						"2"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "UPDATE Medical Certificate By ID (admin)",
+			"name": "DELETE Physician By ID (admin)",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -2127,25 +2020,10 @@
 						}
 					]
 				},
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": 1,\r\n    \"created\": \"2024-11-01T23:01:23.1857308\",\r\n    \"updated\": \"2024-12-02T23:01:23.1857308\",\r\n    \"signed\": \"false\"  \r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
+				"method": "DELETE",
+				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicalcertificate/1",
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/physician/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2155,8 +2033,348 @@
 						"rest-acmemedical",
 						"api",
 						"v1",
-						"medicalcertificate",
-						"1"
+						"physician",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Physician By ID (user)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "8277",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "cst8277",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/physician/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest-acmemedical",
+						"api",
+						"v1",
+						"physician",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Patient By ID (admin)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/patient/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest-acmemedical",
+						"api",
+						"v1",
+						"patient",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Patient By ID (user)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "8277",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "cst8277",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/patient/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest-acmemedical",
+						"api",
+						"v1",
+						"patient",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Medicine By ID (user)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "8277",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "cst8277",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicine/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest-acmemedical",
+						"api",
+						"v1",
+						"medicine",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Medical School By ID (admin)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicalschool/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest-acmemedical",
+						"api",
+						"v1",
+						"medicalschool",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Medical School By ID (user)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "8277",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "cst8277",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicalschool/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest-acmemedical",
+						"api",
+						"v1",
+						"medicalschool",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Medical Training By ID (user)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "8277",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "cst8277",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicaltraining/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest-acmemedical",
+						"api",
+						"v1",
+						"medicaltraining",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET All Physicians (cst8288 not existed id)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "cst8288",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "cst8288",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/physician",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest-acmemedical",
+						"api",
+						"v1",
+						"physician"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET All Medical School (cst8288 not existed id)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "cst8288",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "cst8288",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicalschool",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest-acmemedical",
+						"api",
+						"v1",
+						"medicalschool"
 					]
 				}
 			},
