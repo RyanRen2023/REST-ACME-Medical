@@ -1498,7 +1498,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Harvard Medical School\",\r\n    \"entity-type\": \"private_school\",\r\n    \"medicalTrainings\": []\r\n}",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Harvard Medical School\",\r\n    \"entityType\": \"private_school\",\r\n    \"medicalTrainings\": []\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1551,7 +1551,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 2,\r\n    \"name\": \"State University Medical School\",\r\n    \"entity-type\": \"public_school\",\r\n    \"medicalTrainings\": []\r\n}",
+					"raw": "{\r\n    \"id\": 2,\r\n    \"name\": \"State University Medical School\",\r\n    \"entityType\": \"public_school\",\r\n    \"medicalTrainings\": []\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
