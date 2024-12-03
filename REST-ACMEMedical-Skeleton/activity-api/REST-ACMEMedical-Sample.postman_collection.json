@@ -588,7 +588,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Charles\",\r\n    \"lastName\": \"Xavier\",\r\n    \"year\": 1978,\r\n    \"address\": \"456 Main St. Toronto\",\r\n    \"height\": 170,\r\n    \"weight\": 90,\r\n    \"smoker\": 1\r\n}",
+					"raw": "{\r\n    \"firstName\": \"Charles\",\r\n    \"lastName\": \"Xavier\",\r\n    \"year\": 1978,\r\n    \"address\": \"456 Main St. Toronto\",\r\n    \"height\": 170,\r\n    \"weight\": 90,\r\n    \"smoker\": 1,\r\n    \"version\":1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -596,7 +596,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/rest-acmemedical/api/v1/patient",
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/patient/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -606,7 +606,8 @@
 						"rest-acmemedical",
 						"api",
 						"v1",
-						"patient"
+						"patient",
+						"2"
 					]
 				}
 			},
@@ -1750,8 +1751,23 @@
 			"response": []
 		},
 		{
-			"name": "Create New Medical Training",
+			"name": "POST New Medical Training(admin)",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -1781,8 +1797,23 @@
 			"response": []
 		},
 		{
-			"name": "Update Medical Training By ID",
+			"name": "Update Medical Training By ID(admin)",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [
 					{
@@ -1819,8 +1850,23 @@
 			"response": []
 		},
 		{
-			"name": "Delete Medical Training By ID",
+			"name": "Delete Medical Training By ID(admin)",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
 				"method": "DELETE",
 				"header": [],
 				"url": {
@@ -2191,6 +2237,5 @@
 			},
 			"response": []
 		}
-
 	]
 }

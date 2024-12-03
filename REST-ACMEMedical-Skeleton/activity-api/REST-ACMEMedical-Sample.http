@@ -106,7 +106,7 @@ Content-Type: application/json
 
 ###
 # @name UPDATE Patient (admin)
-PUT http://localhost:8080/rest-acmemedical/api/v1/patient
+PUT http://localhost:8080/rest-acmemedical/api/v1/patient/2
 Authorization: Basic admin admin
 Content-Type: application/json
 
@@ -117,7 +117,8 @@ Content-Type: application/json
   "address": "456 Main St. Toronto",
   "height": 170,
   "weight": 90,
-  "smoker": 1
+  "smoker": 1,
+  "version": 1
 }
 
 ###
@@ -335,8 +336,9 @@ Authorization: Basic cst8277 8277
 Content-Type: application/json
 
 ###
-# @name Create New Medical Training
+# @name POST New Medical Training(admin)
 POST http://localhost:8080/rest-acmemedical/api/v1/medicaltraining
+Authorization: Basic admin admin
 Content-Type: application/json
 
 {
@@ -350,8 +352,9 @@ Content-Type: application/json
 }
 
 ###
-# @name Update Medical Training By ID
+# @name Update Medical Training By ID(admin)
 PUT http://localhost:8080/rest-acmemedical/api/v1/medicaltraining/1
+Authorization: Basic admin admin
 Content-Type: application/json
 
 {
@@ -365,8 +368,9 @@ Content-Type: application/json
 }
 
 ###
-# @name Delete Medical Training By ID
+# @name Delete Medical Training By ID(admin)
 DELETE http://localhost:8080/rest-acmemedical/api/v1/medicaltraining/1
+Authorization: Basic admin admin
 
 ###
 # @name GET All Medical Certificate(admin)
