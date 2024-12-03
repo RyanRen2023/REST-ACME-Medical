@@ -630,7 +630,7 @@
 						}
 					]
 				},
-				"method": "POST",
+				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -642,7 +642,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/rest-acmemedical/api/v1/patient",
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/patient/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -652,7 +652,8 @@
 						"rest-acmemedical",
 						"api",
 						"v1",
-						"patient"
+						"patient",
+						"1"
 					]
 				}
 			},
@@ -1040,7 +1041,7 @@
 						}
 					]
 				},
-				"method": "POST",
+				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -1052,7 +1053,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicine",
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicine/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1062,7 +1063,8 @@
 						"rest-acmemedical",
 						"api",
 						"v1",
-						"medicine"
+						"medicine",
+						"1"
 					]
 				}
 			},
@@ -1539,7 +1541,7 @@
 						}
 					]
 				},
-				"method": "DELETE",
+				"method": "PUT",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -1661,7 +1663,7 @@
 			"response": []
 		},
 		{
-			"name": "GET All Medical Training By ID(admin)",
+			"name": "GET Medical Training By ID(admin)",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -1704,7 +1706,7 @@
 			"response": []
 		},
 		{
-			"name": "GET All Medical Training By ID(user)",
+			"name": "GET Medical Training By ID(user)",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -1746,6 +1748,106 @@
 			},
 			"response": []
 		},
+
+		{
+			"name": "Create New Medical Training",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"schoolId\": 2,\n  \"startDate\": \"2024-11-29T16:15:55\",\n  \"endDate\": \"2024-11-29T16:15:55\",\n  \"active\": true,\n  \"created\": \"2024-11-29T16:15:55\",\n  \"updated\": \"2024-11-29T16:15:55\",\n  \"version\": 1\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicaltraining",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest-acmemedical",
+						"api",
+						"v1",
+						"medicaltraining"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Medical Training By ID",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"schoolId\": 2,\n  \"startDate\": \"2024-11-30T12:00:00\",\n  \"endDate\": \"2024-11-30T15:00:00\",\n  \"active\": false,\n  \"created\": \"2024-11-29T16:15:55\",\n  \"updated\": \"2024-11-30T12:00:00\",\n  \"version\": 2\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicaltraining/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest-acmemedical",
+						"api",
+						"v1",
+						"medicaltraining",
+						"1"
+					],
+					"variable": [
+						{
+							"key": "medicalTrainingId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Medical Training By ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicaltraining/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest-acmemedical",
+						"api",
+						"v1",
+						"medicaltraining",
+						"1"
+					],
+					"variable": [
+						{
+							"key": "medicalTrainingId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+
 		{
 			"name": "GET All Medical Certificate(admin)",
 			"request": {
@@ -1833,7 +1935,7 @@
 			"response": []
 		},
 		{
-			"name": "GET All Medical Medicalcertificate By ID(admin)",
+			"name": "GET Medical Medicalcertificate By ID(admin)",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -1876,7 +1978,7 @@
 			"response": []
 		},
 		{
-			"name": "GET All Medical Medicalcertificate By ID(user)",
+			"name": "GET Medical Medicalcertificate By ID(user)",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -2005,7 +2107,7 @@
 			"response": []
 		},
 		{
-			"name": "GET All Prescription By ID(admin)",
+			"name": "GET Prescription By ID(admin)",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -2048,7 +2150,7 @@
 			"response": []
 		},
 		{
-			"name": "GET All Prescription By ID(user)",
+			"name": "GET Prescription By ID(user)",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -2090,6 +2192,7 @@
 			},
 			"response": []
 		}
+
 
 	]
 }
