@@ -1,4 +1,0 @@
-# Created at 2024-11-21T14:56:37.498
-Boot Manifest-JAR contains absolute paths in classpath 'E:\Level 4\8277\lab\Assignment4\GroupAssignment4\REST-ACMEMedical-Skeleton\s4_java_group\REST-ACMEMedical-Skeleton\target\test-classes'
-Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
-
