@@ -584,7 +584,7 @@
 						}
 					]
 				},
-				"method": "POST",
+				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -995,7 +995,7 @@
 						}
 					]
 				},
-				"method": "POST",
+				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -1007,7 +1007,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicine",
+					"raw": "http://localhost:8080/rest-acmemedical/api/v1/medicine/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1017,7 +1017,8 @@
 						"rest-acmemedical",
 						"api",
 						"v1",
-						"medicine"
+						"medicine",
+						"1"
 					]
 				}
 			},
@@ -1498,7 +1499,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Harvard Medical School\",\r\n    \"entityType\": \"private_school\",\r\n    \"medicalTrainings\": []\r\n}",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Harvard Medical School\",\r\n    \"entityType\": \"public_school\",\r\n    \"medicalTrainings\": []\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1551,7 +1552,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 2,\r\n    \"name\": \"State University Medical School\",\r\n    \"entityType\": \"public_school\",\r\n    \"medicalTrainings\": []\r\n}",
+					"raw": "{\r\n    \"id\": 2,\r\n    \"name\": \"State University Medical School\",\r\n    \"entityType\": \"private_school\",\r\n    \"medicalTrainings\": []\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

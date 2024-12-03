@@ -106,7 +106,7 @@ Content-Type: application/json
 
 ###
 # @name UPDATE Patient (admin)
-POST http://localhost:8080/rest-acmemedical/api/v1/patient
+PUT http://localhost:8080/rest-acmemedical/api/v1/patient
 Authorization: Basic admin admin
 Content-Type: application/json
 
@@ -196,7 +196,7 @@ Content-Type: application/json
 
 ###
 # @name UPDATE Medicine (admin)
-POST http://localhost:8080/rest-acmemedical/api/v1/medicine
+PUT http://localhost:8080/rest-acmemedical/api/v1/medicine/1
 Authorization: Basic admin admin
 Content-Type: application/json
 
@@ -293,7 +293,7 @@ Content-Type: application/json
 {
   "id": 1,
   "name": "Harvard Medical School",
-  "entity-type": "private_school",
+  "entityType": "public_school",
   "medicalTrainings": []
 }
 
@@ -306,7 +306,7 @@ Content-Type: application/json
 {
   "id": 2,
   "name": "State University Medical School",
-  "entity-type": "public_school",
+  "entityType": "private_school",
   "medicalTrainings": []
 }
 
