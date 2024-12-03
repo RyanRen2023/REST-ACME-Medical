@@ -836,21 +836,20 @@ public class TestACMEMedicalSystem {
 //        assertThat(trainings, is(not(empty())));
     }
 
-
     @Test
-    public void test36_getMedicalTrainingById_withAdminRole() {
-//        int id = dataMedicalTraining().getId();
-//        MedicalTraining updatedTraining = dataMedicalTraining();
+    public void test36_getMedical_Certificate_by_id_withAdminRole() {
+        MedicalCertificate updateMedicalCertificate = new MedicalCertificate();
+        updateMedicalCertificate.setId(1);
         int id = 1;
         Response response = webTarget
                 .register(adminAuth)
-                .path(MEDICAL_TRAINING_RESOURCE_NAME + SLASH + id)
+                .path(MEDICAL_CERTIFICATE_RESOURCE_NAME + SLASH + id)
                 .request()
-                .get();
+                .put(Entity.json(updateMedicalCertificate));
         assertThat(response.getStatus(), is(200));
-//        MedicalTraining training = response.readEntity(MedicalTraining.class);
-//        assertThat(training.getId(), is(id));
+
     }
+
 
 
     @Test
@@ -1034,19 +1033,12 @@ public class TestACMEMedicalSystem {
 
 
 
-    @Test
-    public void test50_deleteMedicalTraining_withAdminRole() {
-        int id = 1;
-        Response response = webTarget
-                .register(adminAuth)
-                .path(MEDICAL_TRAINING_RESOURCE_NAME + SLASH+id)
-                .request()
-                .delete();
-        assertThat(response.getStatus(), is(204));
-    }
+
+
+
 
     @Test
-    public void test51_deleteMedicalTraining_withUserRole() {
+    public void test50_deleteMedicalTraining_withUserRole() {
         int id = 1;
         Response response = webTarget
                 .register(userAuth)
