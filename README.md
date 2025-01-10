@@ -110,9 +110,3 @@ The Maven Surefire report is generated at:
 
 ---
 
-## Known Issues
-- **LazyInitializationException**:
-  Resolved using `LEFT JOIN FETCH` in named queries for `MedicalSchool` and `MedicalTraining`.
-
----
-
